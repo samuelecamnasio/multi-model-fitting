@@ -3,7 +3,7 @@ from numpy import *
 from math import sqrt
 
 
-# Fits the input points to a line,
+# Fits the input points to a line using the least squares,
 # returns the m and b parameters of a line
 def best_fit_slope_and_intercept(xs, ys):
     m = (((mean(xs) * mean(ys)) - mean(xs * ys)) /
