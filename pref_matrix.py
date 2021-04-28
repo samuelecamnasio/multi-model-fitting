@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as lines
 import numpy as np
 from Cluster import Cluster
+from LineFitter import fit_on_fly_lines
+from CircleFitter import fit_on_fly_circles
 
 def distance_from_line(p1,p2,p3):   #calculates the normal distance between a point p3 and a line passing through p1 and p2
     return (np.linalg.norm(np.cross(p2-p1, p1-p3)) / np.linalg.norm(p2-p1)) == 0
@@ -22,10 +24,9 @@ def get_preference_matrix(points):
     #print(pref_mat[:, 14])
     return pref_mat
 
-def Gric(cluster, model):   #model_dimension = 2 for lines, = 3 for circumferences
+def Gric(cluster):   #model_dimension = 2 for lines, = 3 for circumferences
+
     g=0
-    rho=rho_calculation(cluster, model)
-    sigma=1 # sigma è un multiplo della deviazione standard del rumore sui dati
 
     lambda1=1 #paper multilink, pag.6 (row 555/556)
     lambda2=2
@@ -33,23 +34,25 @@ def Gric(cluster, model):   #model_dimension = 2 for lines, = 3 for circumferenc
     d=1 # number of dimensions modeled (d=3 -> fund. matrix, d=2 -> homography, d=1 -> lines, circumferences)
     u=2 #number of model paramters (u=2 for lines, u=3 for circumferences)
 
+    if (cluster.model_type == "Line"):   #if model is a line
+        err, sigma = fit_on_fly_lines(cluster.points)   # sigma è un multiplo della deviazione standard del rumore sui dati
+    elif (cluster.model_type == "Circle"):    #if model is a circle
+        err, sigma = fit_on_fly_circles(cluster.points)
+
+    rho = rho_calculation(err)
     for k in range(0, len(cluster.points) - 1):
-        if(len(model)==2):
-            err=distance_from_line(model[0], model[1], cluster.points[k])
-        elif(len(model)==3):
-            err = distance_from_circ(model[0], model[1], cluster.points[k])
-       g+= rho[k]*(err/sigma)^2+lambda1*d*len(cluster)+lambda2*u
+        g+= rho[k]*(err[k]/sigma)^2+lambda1*d*len(cluster)+lambda2*u
 
     return g
 
-def sigma_calculation(cluster, model):
-    return 0
+def rho_calculation(error):    # ATM: binary, equals 1 for inliers (residuals < epsilon) and 0 for outliers. Should be done with M-estimators
 
-def rho_calculation(cluster, model):    # ATM: binary, equals 1 for inliers (residuals < epsilon) and 0 for outliers. Should be done with M-estimators
-
-    rho=np.zeros((1, len(cluster.points)))
-    for k in range(0, len(cluster.points)-1):  # iterates all the points
-        rho[k]= distance_from_line(model[0], model[1], cluster.points[k])  # populates the preference matrix
+    rho=np.zeros((1, len(error)))
+    for k in range(0, len(error.points)-1):  # iterates all the points
+        if(error[k]>4):
+            rho[k]= 0
+        else:
+            rho[k]=1
 
     return rho
 
@@ -64,9 +67,8 @@ prova=Cluster(mat[0:5],1000, "line")
 
 print("Cluster prova: "+str(prova.points))
 
-a=rho_calculation(1)
+pm=get_preference_matrix(mat)   #preference matrix calculation
 
-print("Rho: "+str(a))
 
 
 
