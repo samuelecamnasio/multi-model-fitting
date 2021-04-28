@@ -1,8 +1,7 @@
 import numpy as np
-from scipy import optimize
-from matplotlib import pyplot as plt, cm, colors
-from math import sqrt, pi
+from math import sqrt
 
+# from https://github.com/AlliedToasters/circle-fit/blob/master/demo.ipynb
 
 def calc_R(x, y, xc, yc):
     """
