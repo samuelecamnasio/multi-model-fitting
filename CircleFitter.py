@@ -102,6 +102,10 @@ def hyper_fit(cluster_points, IterMax=99, verbose=False):
 
     return residuals, sigma
 
+
+def fit_on_fly_circles(cluster_points):
+    return hyper_fit(cluster_points)
+
 """
 
 def plot_data_circle(x, y, xc, yc, R):
