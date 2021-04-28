@@ -1,6 +1,6 @@
 # multi-model-fitting
 
-##image analysis and computer vision project 2020/2021
+## image analysis and computer vision project 2020/2021
 
 Andrea Bonatti
 Samuele Bosi
