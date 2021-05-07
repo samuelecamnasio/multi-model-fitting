@@ -60,8 +60,7 @@ def find_circle(x1, y1, x2, y2, x3, y3) :
 
     return h,k,r
 
-def distance_from_circ(p1, p2, p3,
-                       p4):  # calculates the normal distance between a point p4 and a circle passing through p1, p2 and p3
+def distance_from_circ(p1, p2, p3, p4):  # calculates the normal distance between a point p4 and a circle passing through p1, p2 and p3
     h,k,r = find_circle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1]) #find centre and radius
     return abs(sqrt(pow(p4[0]-h,2) + pow(p4[1]-k,2)) - r)
 
@@ -89,28 +88,69 @@ def get_preference_matrix_2(points, mode):
     threshold = 5  # to decide better
 
     num_samplings = K*len(points)
-    pref_mat = []
-
-    if mode == "Line":
-        MSS = LINE_MSS
-    elif mode == "Circle":
-        MSS = CIRCLE_MSS
+    pref_mat = np.zeros(len(points), num_samplings)
 
     for m in range(num_samplings):
-        mss_indx = sample_points(points, MSS)
-        for i in range(len(points)):
-            if distance_from_line(points[mss_indx[0]], points[mss_indx[1]], points[i]) < threshold:
-                pref_mat[i][m] = 1
-            else:
-                pref_mat[i][m] = 0
-
+        if mode == "Line":
+            mss_indx = sample_points(points, LINE_MSS, "localized")
+            for i in range(len(points)):
+                if distance_from_line(points[mss_indx[0]], points[mss_indx[1]], points[i]) < threshold:
+                    pref_mat[i][m] = 1
+                else:
+                    pref_mat[i][m] = 0
+        elif mode == "Circle":
+            mss_indx = sample_points(points, CIRCLE_MSS, "localized")
+            for i in range(len(points)):
+                if distance_from_circ(points[mss_indx[0]], points[mss_indx[1]], points[mss_indx[2]], points[i]) < threshold:
+                    pref_mat[i][m] = 1
+                else:
+                    pref_mat[i][m] = 0
+        else:
+            raise Exception("get_preference_matrix-> no mode selected")
     return pref_mat
 
-def sample_points(points, MSS):
-    # avoid that the same point is taken two times
-    indexes = np.zeros((2, 1))
-    return indexes
 
+def sample_points(points, MSS, mode = "uniform"):
+    if mode == "uniform":
+        return sample_points_uniform(points, MSS)
+    elif mode == "localized":
+        return sample_points_localized(points, MSS)
+    else:
+        raise Exception("sample_points-> no mode selected")
+
+
+def sample_points_uniform(points, MSS):
+    g = np.random.Generator(np.random.PCG64())
+    mss_idx = np.array(g.choice(len(points), MSS, replace=False))
+    return mss_idx
+
+def sample_points_localized(src_pts, k, ni=1 / 3):
+    num_of_pts = src_pts.shape[0]
+    g = np.random.Generator(np.random.PCG64())
+
+    mss0 = g.choice(num_of_pts, 1)
+
+    prob_local = get_localized_prob(src_pts, src_pts[mss0], ni)
+
+    prob = np.max([prob_local])
+    prob[mss0] = 0
+    prob = prob / np.sum(prob)
+
+    mss1 = g.choice(num_of_pts, k - 1, replace=False, p=prob)
+
+    mss = mss0.tolist() + mss1.tolist()
+
+    return np.array(mss)
+
+def get_localized_prob(pts, pt, ni):
+        d_squared = np.sum(np.square(np.subtract(pts, pt)), axis=1)
+
+        sigma = ni * np.median(np.sqrt(d_squared))
+        sigma_squared = sigma ** 2
+
+        prob = np.exp(- (1 / sigma_squared) * d_squared)
+
+        return prob
 
 """
  The gric function should be used to compute the gric score for each cluster once it's created

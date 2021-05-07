@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8ee3956b-0e00-4a99-a4b4-a2d9d369861c" name="Default Changelist" comment="added function to be called on GRIC">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/multi-model-fitting.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/multi-model-fitting.iml" afterDir="false" />
+    <list default="true" id="8ee3956b-0e00-4a99-a4b4-a2d9d369861c" name="Default Changelist" comment="added new preference matrix, TODO sample points">
+      <change afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pref_matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/pref_matrix.py" afterDir="false" />
     </list>
@@ -20,6 +19,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -52,7 +56,15 @@
       <workItem from="1619623871949" duration="7340000" />
       <workItem from="1619632007517" duration="1466000" />
       <workItem from="1619675241806" duration="218000" />
-      <workItem from="1619675505099" duration="5321000" />
+      <workItem from="1619675505099" duration="6478000" />
+      <workItem from="1619696410734" duration="2962000" />
+      <workItem from="1619720663179" duration="603000" />
+      <workItem from="1619966555708" duration="1305000" />
+      <workItem from="1619980632998" duration="621000" />
+      <workItem from="1620121567613" duration="5356000" />
+      <workItem from="1620213161693" duration="1303000" />
+      <workItem from="1620286489168" duration="2402000" />
+      <workItem from="1620387518832" duration="4831000" />
     </task>
     <task id="LOCAL-00001" summary="added line fitting">
       <created>1619628084908</created>
@@ -89,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619631222658</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added new preference matrix, TODO sample points">
+      <created>1619689410186</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1619689410187</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,6 +132,7 @@
     <MESSAGE value="added Hyper Fit of kanatani" />
     <MESSAGE value="added link to used repo" />
     <MESSAGE value="added function to be called on GRIC" />
-    <option name="LAST_COMMIT_MESSAGE" value="added function to be called on GRIC" />
+    <MESSAGE value="added new preference matrix, TODO sample points" />
+    <option name="LAST_COMMIT_MESSAGE" value="added new preference matrix, TODO sample points" />
   </component>
 </project>
