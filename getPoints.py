@@ -99,3 +99,12 @@ def generate_points():
 
     plt.scatter(random_noise[:, 0], random_noise[:, 1])
     plt.show()
+
+    figure = line1
+    figure = np.vstack((figure, line2))
+    figure = np.vstack((figure, line3))
+    figure = np.vstack((figure, line4))
+    figure = np.vstack((figure, circ_in))
+    figure = np.vstack((figure, circ_out))
+    figure = np.vstack((figure, random_noise))
+    return figure

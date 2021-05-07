@@ -101,7 +101,7 @@ def get_preference_matrix_2(points, mode):
         elif mode == "Circle":
             mss_indx = sample_points(points, CIRCLE_MSS, "localized")
             for i in range(len(points)):
-                if distance_from_circ(points[mss_indx[0]], points[mss_indx[1]], points[mss_indx[2]], points[i]) < threshold:
+                if distance_from_circ(points[mss_indx[0], :], points[mss_indx[1], :], points[mss_indx[2], :], points[i]) < threshold:
                     pref_mat[i][m] = 1
                 else:
                     pref_mat[i][m] = 0
@@ -193,6 +193,18 @@ def rho_calculation(
 
     return rho
 
+#TODO
+def create_clusters(points):
+    cluster_list = np.array()
+    for i in range(len(points)):
+        ## create new cluster
+     print()
+    return cluster_list
+
+#TODO
+def create_distance_matrix(points, ):
+
+    return np.zeros(2,2)
 
 # the .mat file is structured with 150 couples of points where from 10 to 10 they belong to the same line
 mat = scipy.io.loadmat('punti_prova.mat')  # loads the .mat containing the points
