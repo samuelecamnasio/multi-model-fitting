@@ -206,6 +206,16 @@ def create_distance_matrix(points, ):
 
     return np.zeros(2,2)
 
+def jaccard_distance(A, B):
+    union = Cluster(A.points, 0, A.type)
+    intersection = Cluster([], 0, A.type)
+    for point in B.points:
+        if point in A.points:
+            intersection.points += [point]
+        if point not in A.points:
+            union.points += [point]
+    return (len(union.points) - len(intersection.points))/len(union.points)
+
 # the .mat file is structured with 150 couples of points where from 10 to 10 they belong to the same line
 mat = scipy.io.loadmat('punti_prova.mat')  # loads the .mat containing the points
 mat = mat['A']
