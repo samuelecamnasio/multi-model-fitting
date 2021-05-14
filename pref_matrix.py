@@ -202,13 +202,29 @@ def create_clusters(points):
     return cluster_list
 
 #TODO
-def create_distance_matrix(points, ):
+def create_distance_matrix(points ):
+    distance_mat = np.zeros([len(points), len(points)])
+    cluster_array = []
+    thisdict = {
+    }
+    for i in range(len(points)):
+        cluster_array.append(Cluster(str(i), [points[i]], 0, "line"))
+        thisdict[str(i)] = i
+    print(thisdict)
+    for c1 in cluster_array:
+        for c2 in cluster_array:
+            distance_mat[thisdict[c1.name], thisdict[c2.name]] = jaccard_distance(c1, c2)
 
-    return np.zeros(2,2)
+    print(distance_mat)
+    return 0
 
 def jaccard_distance(A, B):
-    union = Cluster(A.points, 0, A.type)
-    intersection = Cluster([], 0, A.type)
+    print(str(A.name) + " : " + str(A.points))
+    print(str(B.name) + " : " + str(B.points))
+    union = Cluster("", [], 0, A.type)
+    for point in A.points:
+        union.points += [point]
+    intersection = Cluster("", [], 0, A.type)
     for point in B.points:
         if point in A.points:
             intersection.points += [point]
@@ -217,11 +233,13 @@ def jaccard_distance(A, B):
     return (len(union.points) - len(intersection.points))/len(union.points)
 
 # the .mat file is structured with 150 couples of points where from 10 to 10 they belong to the same line
-mat = scipy.io.loadmat('punti_prova.mat')  # loads the .mat containing the points
-mat = mat['A']
+#mat = scipy.io.loadmat('punti_prova.mat')  # loads the .mat containing the points
+#mat = mat['A']
 
-prova = Cluster(mat[0:5], 1000, "line")
+#prova = Cluster(mat[0:5], 1000, "line")
 
-print("Cluster prova: " + str(prova.points))
+#print("Cluster prova: " + str(prova.points))
 
-pm = get_preference_matrix(mat)  # preference matrix calculation
+#pm = get_preference_matrix(mat)  # preference matrix calculation
+create_distance_matrix([[0,0], [1,2], [1,3], [0,0], [4,5]])
+
