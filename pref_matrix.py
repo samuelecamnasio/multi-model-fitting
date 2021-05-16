@@ -205,12 +205,15 @@ def create_clusters(points):
 def create_distance_matrix(points ):
     distance_mat = np.zeros([len(points), len(points)])
     cluster_array = []
+    # Dictionary creation
     thisdict = {
     }
+    # Population of the dictionary ("index_in_dist_matr": index)
     for i in range(len(points)):
         cluster_array.append(Cluster(str(i), [points[i]], 0, "line"))
         thisdict[str(i)] = i
     print(thisdict)
+    #Calculation of distances and population of the matrix
     for c1 in cluster_array:
         for c2 in cluster_array:
             distance_mat[thisdict[c1.name], thisdict[c2.name]] = jaccard_distance(c1, c2)
