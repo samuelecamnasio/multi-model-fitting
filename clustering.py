@@ -111,7 +111,7 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
     return clusters, pref_m
 
 
-def gric(cluster, points, mode):  # model_dimension = 2 for lines, = 3 for circumferences
+def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circumferences
 
     g = 0
     # cluster contains the indexes of the points that are in the cluster
