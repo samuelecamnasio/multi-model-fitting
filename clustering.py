@@ -15,25 +15,24 @@ def tanimoto_distance(i, j):
     t_distance = 1 - pq / (p_square + q_square - pq)
     return t_distance
 
+
 # TODO
-def jaccard_distance(A, B):     # A and B are points clusters
-    #print(str(A.name) + " : " + str(A.points))
-    #print(str(B.name) + " : " + str(B.points))
+def jaccard_distance(A, B):  # A and B are points clusters
+    # print(str(A.name) + " : " + str(A.points))
+    # print(str(B.name) + " : " + str(B.points))
 
-    #union = Cluster("", [], 0, A.type)
+    # union = Cluster("", [], 0, A.type)
     union = A
-    #for point in A.points:
+    # for point in A.points:
     #    union.points += [point]
-
-    #intersection = Cluster("", [], 0, A.type)
+    # intersection = Cluster("", [], 0, A.type)
     intersection = []
     for point in B:
         if point in A:
             intersection += [point]
         if point not in A:
             union += [point]
-    return (len(union) - len(intersection))/len(union)
-
+    return (len(union) - len(intersection)) / len(union)
 
 
 def measure(x):
@@ -46,19 +45,17 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
     clusters = [[i] for i in pts]
     new_idx = pref_m.shape[0]
 
-
     pos = {i: i for i in pts}
 
     x0 = list(itertools.combinations(range(num_of_pts), 2))
 
-    if(dist_type=="Tanimoto"):
+    if dist_type == "Tanimoto":
         # Using Tanimoto distance
         x0 = [(cl_i, cl_j, tanimoto_distance(pref_m[cl_i], pref_m[cl_j])) for cl_i, cl_j in x0]
-    elif(dist_type=="Jaccard"):
+    elif dist_type == "Jaccard":
         # Using Jaccard distance
         # TODO
         x0 = [(cl_i, cl_j, jaccard_distance(clusters[pos[cl_i]], clusters[pos[cl_j]])) for cl_i, cl_j in x0]
-
 
     while pref_m.shape[0] > 1:
         x0.sort(key=measure)
@@ -66,15 +63,20 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
         if min_distance >= 1:
             break
 
-        if(gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points)<gric(clusters[pos[cl_0]], "Line", points)+gric(clusters[pos[cl_1]], "Line", points)
-                or gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points)<gric(clusters[pos[cl_0]], "Circle", points)+gric(clusters[pos[cl_1]], "Circle", points)):
+        if (gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points) < gric(clusters[pos[cl_0]], "Line",
+                                                                                   points) + gric(clusters[pos[cl_1]],
+                                                                                                  "Line", points)
+                or gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points) < gric(clusters[pos[cl_0]],
+                                                                                            "Circle", points) + gric(
+                    clusters[pos[cl_1]], "Circle", points)):
 
             new_pf = np.minimum(pref_m[pos[cl_0]], pref_m[pos[cl_1]])  # element-wise min
             new_cluster = clusters[pos[cl_0]] + clusters[pos[cl_1]]
 
             pref_m = np.delete(pref_m, (pos[cl_0], pos[cl_1]), axis=0)
             pref_m = np.vstack((pref_m, new_pf))
-            clusters = [c for idx_c, c in enumerate(clusters) if idx_c not in (pos[cl_0], pos[cl_1])]  # delete C_i and C_j
+            clusters = [c for idx_c, c in enumerate(clusters) if
+                        idx_c not in (pos[cl_0], pos[cl_1])]  # delete C_i and C_j
             clusters = clusters + [new_cluster]
             new_cluster.sort()
 
@@ -104,7 +106,7 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
             print("[CLUSTERING] New cluster: " + str(new_cluster)
                   + "\t-\tTanimoto distance: " + str(min_distance))
         else:
-            x0[0][-1] = 2
+            x0[0][-1] = 2  # set distance ata an infinite value
 
     return clusters, pref_m
 

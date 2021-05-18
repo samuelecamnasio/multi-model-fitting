@@ -1,6 +1,4 @@
 import scipy.io
-import matplotlib.pyplot as plt
-import matplotlib.lines as lines
 import numpy as np
 from Cluster import Cluster
 from LineFitter import fit_on_fly_lines
@@ -81,14 +79,15 @@ def distance_from_circ(p1, p2, p3, p4):  # calculates the normal distance betwee
 #     return pref_mat
 
 def get_preference_matrix_2(points, mode):
+    # TODO change the K to select an optimal number of sampling
+    K = 1  # temporary trials to do
     LINE_MSS = 2
     CIRCLE_MSS = 3
-    K = 6  # temporary trials to do
 
     threshold = 5  # to decide better
 
     num_samplings = K*len(points)
-    pref_mat = np.zeros(len(points), num_samplings)
+    pref_mat = np.zeros((len(points), num_samplings))
 
     for m in range(num_samplings):
         if mode == "Line":
@@ -110,7 +109,7 @@ def get_preference_matrix_2(points, mode):
     return pref_mat
 
 
-def sample_points(points, MSS, mode = "uniform"):
+def sample_points(points, MSS, mode="uniform"):
     if mode == "uniform":
         return sample_points_uniform(points, MSS)
     elif mode == "localized":
@@ -132,8 +131,8 @@ def sample_points_localized(src_pts, k, ni=1 / 3):
 
     prob_local = get_localized_prob(src_pts, src_pts[mss0], ni)
 
-    prob = np.max([prob_local])
-    prob[mss0] = 0
+    prob = np.max([prob_local], axis=0)
+    prob[mss0] = 0.0
     prob = prob / np.sum(prob)
 
     mss1 = g.choice(num_of_pts, k - 1, replace=False, p=prob)
@@ -143,14 +142,14 @@ def sample_points_localized(src_pts, k, ni=1 / 3):
     return np.array(mss)
 
 def get_localized_prob(pts, pt, ni):
-        d_squared = np.sum(np.square(np.subtract(pts, pt)), axis=1)
+    d_squared = np.sum(np.square(np.subtract(pts, pt)), axis=1)
 
-        sigma = ni * np.median(np.sqrt(d_squared))
-        sigma_squared = sigma ** 2
+    sigma = ni * np.median(np.sqrt(d_squared))
+    sigma_squared = sigma ** 2
 
-        prob = np.exp(- (1 / sigma_squared) * d_squared)
+    prob = np.exp(- (1 / sigma_squared) * d_squared)
 
-        return prob
+    return prob
 
 """
  The gric function should be used to compute the gric score for each cluster once it's created
@@ -160,38 +159,38 @@ def get_localized_prob(pts, pt, ni):
 """
 
 
-
-
-#TODO
-def create_clusters(points):
-    cluster_list = np.array()
-    for i in range(len(points)):
-        ## create new cluster
-     print()
-    return cluster_list
-
-#TODO
-def create_distance_matrix(points ):
-    distance_mat = np.zeros([len(points), len(points)])
-    cluster_array = []
-    # Dictionary creation
-    thisdict = {
-    }
-
-    # Population of the dictionary ("index_in_dist_matr": index)
-    for i in range(len(points)):
-        cluster_array.append(Cluster(str(i), [points[i]], 0, "line"))
-        thisdict[str(i)] = i
-    print(thisdict)
-
-    #Calculation of distances and population of the matrix
-    for c1 in cluster_array:
-        for c2 in cluster_array:
-            distance_mat[thisdict[c1.name], thisdict[c2.name]] = jaccard_distance(c1, c2)
-
-    print(distance_mat)
-    return 0
-
+#
+#
+##TODO
+#def create_clusters(points):
+#    cluster_list = np.array()
+#    for i in range(len(points)):
+#        ## create new cluster
+#     print()
+#    return cluster_list
+#
+##TODO
+#def create_distance_matrix(points ):
+#    distance_mat = np.zeros([len(points), len(points)])
+#    cluster_array = []
+#    # Dictionary creation
+#    thisdict = {
+#    }
+#
+#    # Population of the dictionary ("index_in_dist_matr": index)
+#    for i in range(len(points)):
+#        cluster_array.append(Cluster(str(i), [points[i]], 0, "line"))
+#        thisdict[str(i)] = i
+#    print(thisdict)
+#
+#    #Calculation of distances and population of the matrix
+#    for c1 in cluster_array:
+#        for c2 in cluster_array:
+#            distance_mat[thisdict[c1.name], thisdict[c2.name]] = jaccard_distance(c1, c2)
+#
+#    print(distance_mat)
+#    return 0
+#
 
 
 # the .mat file is structured with 150 couples of points where from 10 to 10 they belong to the same line
@@ -203,5 +202,5 @@ def create_distance_matrix(points ):
 #print("Cluster prova: " + str(prova.points))
 
 #pm = get_preference_matrix(mat)  # preference matrix calculation
-create_distance_matrix([[0,0], [1,2], [1,3], [0,0], [4,5]])
+#create_distance_matrix([[0,0], [1,2], [1,3], [0,0], [4,5]])
 

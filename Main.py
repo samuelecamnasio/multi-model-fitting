@@ -1,19 +1,18 @@
-###-------------------------------------------------
-# Extract points from the .mat or the generated points
-###-------------------------------------------------
+from getPoints import *
+from pref_matrix import *
+from numpy import *
+from clustering import *
 
+if __name__ == "__main__":
+    # Extract points from the .mat or the generated points
+    points = generate_points()
 
-###-------------------------------------------------
-# Compute the preference matrix for both lines and circles
-###-------------------------------------------------
+    # Compute the preference matrix for both lines and circles
+    pref_mat = get_preference_matrix_2(points, "Line")
+    pref_mat = hstack((pref_mat, get_preference_matrix_2(points, "Circle")))
 
-###-------------------------------------------------
-# Create list of initial clusters
-###-------------------------------------------------
+    # Clustering
+    clusters = clustering(pref_mat, points)
 
-###-------------------------------------------------
-# Until min D < inf (end when all distances are set to inf)
-###-------------------------------------------------
-
-##neds a data structure that sets all distances (truth is new distances have to be computed each time)
+    ##neds a data structure that sets all distances (truth is new distances have to be computed each time)
 
