@@ -67,7 +67,7 @@ def generate_points(model = 1):
     y4 = m_ideal4 * x4 + q_ideal4
     line_ideal4 = np.column_stack((x4, y4))
     line4 = line_ideal4
-    line4 += np.random.normal(0, 2.4, line4.shape)
+    line4 += np.random.normal(0, 0, line4.shape)
 
     # add random noise
     random_noise = np.random.uniform(-100, 100, (50, 2))
@@ -125,11 +125,14 @@ def generate_points(model = 1):
 def visualize_clusters(clusters, points):
     plt.figure(2)
     plt.title('Clusters')
+
     for cluster in clusters:
-        color=[(rand.random(),rand.random(),rand.random())]
-        rand.random()
-        for index in cluster:
-            print("caio: "+str(points[index][0]))
-            plt.scatter(points[index][0], points[index][1], color=color)
+        print("N° of points: " + str(len(cluster)))
+        if(len(cluster)>3):
+            color=[(rand.random(),rand.random(),rand.random())]
+            rand.random()
+            for index in cluster:
+                #print("caio: "+str(points[index][0]))
+                plt.scatter(points[index][0], points[index][1], color=color)
 
     plt.show()

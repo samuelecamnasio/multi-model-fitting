@@ -80,7 +80,7 @@ def distance_from_circ(p1, p2, p3, p4):  # calculates the normal distance betwee
 
 def get_preference_matrix_2(points, mode):
     # TODO change the K to select an optimal number of sampling
-    K = 1  # temporary trials to do
+    K = 6  # temporary trials to do
     LINE_MSS = 2
     CIRCLE_MSS = 3
 

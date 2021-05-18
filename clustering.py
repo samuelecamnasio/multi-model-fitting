@@ -63,12 +63,14 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
         if min_distance >= 1:
             break
 
-        if (gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points) < gric(clusters[pos[cl_0]], "Line",
+        print("Trying to fuse clusters "+str(clusters[pos[cl_0]])+" and "+str(clusters[pos[cl_1]]))
+
+        if ((gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points) < (gric(clusters[pos[cl_0]], "Line",
                                                                                    points) + gric(clusters[pos[cl_1]],
-                                                                                                  "Line", points)
-                or gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points) < gric(clusters[pos[cl_0]],
+                                                                                                  "Line", points)))
+                or (gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points) < (gric(clusters[pos[cl_0]],
                                                                                             "Circle", points) + gric(
-                    clusters[pos[cl_1]], "Circle", points)):
+                    clusters[pos[cl_1]], "Circle", points)))):
 
             new_pf = np.minimum(pref_m[pos[cl_0]], pref_m[pos[cl_1]])  # element-wise min
             new_cluster = clusters[pos[cl_0]] + clusters[pos[cl_1]]
@@ -111,7 +113,7 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
             x0[0] = tuple(el)
 
 
-    return clusters, pref_m
+    return clusters
 
 
 def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circumferences
@@ -126,7 +128,10 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
     lambda2 = 2
 
     d = 1  # number of dimensions modeled (d=3 -> fund. matrix, d=2 -> homography, d=1 -> lines, circumferences)
-    u = 2  # number of model paramters (u=2 for lines, u=3 for circumferences)
+    if(mode == "Line"):
+        u = 2  # number of model paramters (u=2 for lines, u=3 for circumferences)
+    elif(mode == "Circle"):
+        u = 3
 
     if (len(p_of_cluster) > 1 and mode == "Line") or (len(p_of_cluster) > 2 and mode == "Circle"):
 
@@ -135,6 +140,8 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
                 p_of_cluster)  # sigma è un multiplo della deviazione standard del rumore sui dati
         elif mode == "Circle":  # if model is a circle (needs at leats 3 points)
             err, sigma = fit_on_fly_circles(p_of_cluster)
+
+        #sigma=1
 
         if(sigma == 0):
             if(len(p_of_cluster)==2):
