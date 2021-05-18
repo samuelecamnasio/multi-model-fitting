@@ -1,7 +1,7 @@
 import itertools
 import numpy as np
 from pref_matrix import *
-
+from math import *
 
 def tanimoto_distance(i, j):
     pq = np.inner(i, j)
@@ -106,7 +106,10 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
             print("[CLUSTERING] New cluster: " + str(new_cluster)
                   + "\t-\tTanimoto distance: " + str(min_distance))
         else:
-            x0[0][-1] = 2  # set distance ata an infinite value
+            el=list(x0[0])
+            el[-1] = 2  # set distance at an infinite value
+            x0[0] = tuple(el)
+
 
     return clusters, pref_m
 
@@ -115,7 +118,9 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
 
     g = 0
     # cluster contains the indexes of the points that are in the cluster
-    p_of_cluster = (points[i] for i in cluster)
+    p_of_cluster = [points[cluster[0]]]
+    for i in range(1, len(cluster)):
+        p_of_cluster = np.vstack((p_of_cluster, points[cluster[i]]))
 
     lambda1 = 1  # paper multilink, pag.6 (row 555/556)
     lambda2 = 2
@@ -123,15 +128,27 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
     d = 1  # number of dimensions modeled (d=3 -> fund. matrix, d=2 -> homography, d=1 -> lines, circumferences)
     u = 2  # number of model paramters (u=2 for lines, u=3 for circumferences)
 
-    if mode == "Line":  # if model is a line
-        err, sigma = fit_on_fly_lines(
-            p_of_cluster)  # sigma è un multiplo della deviazione standard del rumore sui dati
-    elif mode == "Circle":  # if model is a circle
-        err, sigma = fit_on_fly_circles(p_of_cluster)
+    if (len(p_of_cluster) > 1 and mode == "Line") or (len(p_of_cluster) > 2 and mode == "Circle"):
 
-    rho = rho_calculation(err)
-    for k in range(0, len(p_of_cluster) - 1):
-        g += rho[k] * (err[k] / sigma) ^ 2 + lambda1 * d * len(cluster) + lambda2 * u
+        if mode == "Line":  # if model is a line
+            err, sigma = fit_on_fly_lines(
+                p_of_cluster)  # sigma è un multiplo della deviazione standard del rumore sui dati
+        elif mode == "Circle":  # if model is a circle (needs at leats 3 points)
+            err, sigma = fit_on_fly_circles(p_of_cluster)
+
+        if(sigma == 0):
+            if(len(p_of_cluster)==2):
+                g=inf
+            else:
+                g=100
+        else:
+            rho = rho_calculation(err)
+            for k in range(0, len(p_of_cluster)):
+
+                # TODO: case sigma=0 (same error for multiple points)
+                g += float(rho[k]) * (float(err[k]) / sigma) ** 2 + lambda1 * d * len(cluster) + lambda2 * u
+    else :
+        g = inf
 
     return g
 
@@ -139,8 +156,8 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
 def rho_calculation(
         error):  # ATM: binary, equals 1 for inliers (residuals < epsilon) and 0 for outliers. Should be done with M-estimators
 
-    rho = np.zeros((1, len(error)))
-    for k in range(0, len(error.points) - 1):  # iterates all the points
+    rho = np.zeros((len(error), 1))
+    for k in range(0, len(error)):  # iterates all the points
         if (error[k] > 4):
             rho[k] = 0
         else:

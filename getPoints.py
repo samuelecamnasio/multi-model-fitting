@@ -1,6 +1,7 @@
 import math
 import matplotlib.pyplot as plt
 import numpy as np
+import random as rand
 
 
 def generate_points(model = 1):
@@ -119,3 +120,16 @@ def generate_points(model = 1):
         figure = line4
 
     return figure
+
+
+def visualize_clusters(clusters, points):
+    plt.figure(2)
+    plt.title('Clusters')
+    for cluster in clusters:
+        color=[(rand.random(),rand.random(),rand.random())]
+        rand.random()
+        for index in cluster:
+            print("caio: "+str(points[index][0]))
+            plt.scatter(points[index][0], points[index][1], color=color)
+
+    plt.show()
