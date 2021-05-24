@@ -2,13 +2,14 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 import random as rand
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
 def generate_points(model = 1):
     # -------------------------------------------------------------------------------
     # Generate points on inner circle
     # -------------------------------------------------------------------------------
-    ang_circ_in = np.linspace(0, 2 * math.pi, 300)  ## linspace(start, end, number)
+    ang_circ_in = np.linspace(0, 2 * math.pi, 100)  ## linspace(start, end, number)
     C_in = [0, 0]
     r_in = 30
     x_circ_in = r_in * np.cos(ang_circ_in) + C_in[0]
@@ -16,11 +17,11 @@ def generate_points(model = 1):
 
     circ_ideal_in = np.column_stack((x_circ_in, y_circ_in))
     circ_in = circ_ideal_in
-    circ_in += np.random.normal(0, 2.4, circ_in.shape)
+    circ_in += np.random.normal(0, 0.00001, circ_in.shape)
     # -------------------------------------------------------------------------------
     # Generate points on outer circle
     # -------------------------------------------------------------------------------
-    ang_circ_out = np.linspace(0, 2 * math.pi, 300)  ## linspace(start, end, number)
+    ang_circ_out = np.linspace(0, 2 * math.pi, 100)  ## linspace(start, end, number)
     C_out = [0, 0]
     r_out = 50
     x_circ_out = r_out * np.cos(ang_circ_out) + C_out[0]
@@ -67,7 +68,7 @@ def generate_points(model = 1):
     y4 = m_ideal4 * x4 + q_ideal4
     line_ideal4 = np.column_stack((x4, y4))
     line4 = line_ideal4
-    line4 += np.random.normal(0, 0, line4.shape)
+    line4 += np.random.normal(0, 0.00001, line4.shape)
 
     # add random noise
     random_noise = np.random.uniform(-100, 100, (50, 2))
@@ -118,6 +119,7 @@ def generate_points(model = 1):
 
     else:
         figure = line4
+        figure = np.vstack((figure, random_noise))
 
     return figure
 
@@ -135,4 +137,15 @@ def visualize_clusters(clusters, points):
                 #print("caio: "+str(points[index][0]))
                 plt.scatter(points[index][0], points[index][1], color=color)
 
+    plt.show()
+
+
+def show_pref_matrix(pref_m, label_k):
+    fig, ax = plt.subplots(figsize=(5, 1.5))
+    matr = ax.imshow(pref_m, cmap='Blues', interpolation='nearest')
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="2%", pad=0.05)
+    plt.colorbar(matr, cax=cax)
+    fig.suptitle(label_k)
+    fig.tight_layout()
     plt.show()

@@ -65,14 +65,32 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
 
         print("Trying to fuse clusters "+str(clusters[pos[cl_0]])+" and "+str(clusters[pos[cl_1]]))
 
-        if ((gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points) < (gric(clusters[pos[cl_0]], "Line",
-                                                                                   points) + gric(clusters[pos[cl_1]],
-                                                                                                  "Line", points)))
-                or (gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points) < (gric(clusters[pos[cl_0]],
-                                                                                            "Circle", points) + gric(
-                    clusters[pos[cl_1]], "Circle", points)))):
+        union_line_score = gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points)
+        line_1_score = gric(clusters[pos[cl_0]], "Line", points)
+        line_2_score = gric(clusters[pos[cl_1]], "Line", points)
+        union_circle_score = gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points)
+        circle_1_score = gric(clusters[pos[cl_0]], "Circle", points)
+        circle_2_score = gric(clusters[pos[cl_1]], "Circle", points)
+        #union_circle_score = 10
+        #circle_1_score = 1
+        #circle_2_score = 1
+        print("Line scores: "+str(union_line_score)+" union, "+str(line_2_score+line_1_score) + " single")
+        print("Circle scores: " + str(union_circle_score) + " union, " + str(circle_1_score + circle_2_score) + " single")
+
+
+
+        #out = 0
+        #for i in range(len(pref_m)):
+        #    if new_pf[i] > 0:
+        #        out = 1
+        #        print("found at lest one")
+        #        break
+
+
+        if union_line_score < (line_1_score + line_2_score) or union_circle_score < (circle_1_score + circle_2_score) :
 
             new_pf = np.minimum(pref_m[pos[cl_0]], pref_m[pos[cl_1]])  # element-wise min
+            ##--------
             new_cluster = clusters[pos[cl_0]] + clusters[pos[cl_1]]
 
             pref_m = np.delete(pref_m, (pos[cl_0], pos[cl_1]), axis=0)
@@ -128,9 +146,9 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
     lambda2 = 2
 
     d = 1  # number of dimensions modeled (d=3 -> fund. matrix, d=2 -> homography, d=1 -> lines, circumferences)
-    if(mode == "Line"):
+    if mode == "Line":
         u = 2  # number of model paramters (u=2 for lines, u=3 for circumferences)
-    elif(mode == "Circle"):
+    elif mode == "Circle":
         u = 3
 
     if (len(p_of_cluster) > 1 and mode == "Line") or (len(p_of_cluster) > 2 and mode == "Circle"):
@@ -138,8 +156,10 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
         if mode == "Line":  # if model is a line
             err, sigma = fit_on_fly_lines(
                 p_of_cluster)  # sigma è un multiplo della deviazione standard del rumore sui dati
+            print("Line residue sum "+str(sum(err)) + " ,line residue variance " + str(sigma))
         elif mode == "Circle":  # if model is a circle (needs at leats 3 points)
             err, sigma = fit_on_fly_circles(p_of_cluster)
+            print("Circle residue sum " + str(sum(err)) + " ,circle residue variance " + str(sigma))
 
         #sigma=1
 
@@ -153,7 +173,8 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
             for k in range(0, len(p_of_cluster)):
 
                 # TODO: case sigma=0 (same error for multiple points)
-                g += float(rho[k]) * (float(err[k]) / sigma) ** 2 + lambda1 * d * len(cluster) + lambda2 * u
+                # TODO: needs to work also on the parameters, there are problem when recognizing a model in front of another
+                g += (float(rho[k]) * (float(err[k]) / sigma) ** 2)#+(lambda1 * d * len(cluster) + lambda2 * u)
     else :
         g = inf
 

@@ -4,11 +4,12 @@ from Cluster import Cluster
 from LineFitter import fit_on_fly_lines
 from CircleFitter import fit_on_fly_circles
 from math import sqrt
+from getPoints import show_pref_matrix
 
 
 def distance_from_line(p1, p2,
                        p3):  # calculates the normal distance between a point p3 and a line passing through p1 and p2
-    return (np.linalg.norm(np.cross(p2 - p1, p1 - p3)) / np.linalg.norm(p2 - p1)) == 0
+    return (np.linalg.norm(np.cross(p2 - p1, p1 - p3)) / np.linalg.norm(p2 - p1))
 
 # Function to find the circle on
 # which the given three points lie
@@ -84,7 +85,7 @@ def get_preference_matrix_2(points, mode):
     LINE_MSS = 2
     CIRCLE_MSS = 3
 
-    threshold = 5  # to decide better
+    threshold = 2  # to decide better
 
     num_samplings = K*len(points)
     pref_mat = np.zeros((len(points), num_samplings))
@@ -105,7 +106,9 @@ def get_preference_matrix_2(points, mode):
                 else:
                     pref_mat[i][m] = 0
         else:
-            raise Exception("get_preference_matrix-> no mode selected")
+            raise Exception("get_preference_matrix -> no mode selected")
+
+    show_pref_matrix(pref_mat, mode)
     return pref_mat
 
 
