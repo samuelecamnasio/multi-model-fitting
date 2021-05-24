@@ -5,7 +5,7 @@ from clustering import *
 
 if __name__ == "__main__":
     # Extract points from the .mat or the generated points
-    points = generate_points(3) # 1 complete, 2 test line and circle, anything else is test with only one line
+    points = generate_points(1) # 1 complete, 2 test line and circle, anything else is test with only one line
 
     # Compute the preference matrix for both lines and circles
     pref_mat = get_preference_matrix_2(points, "Line")

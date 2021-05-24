@@ -85,7 +85,7 @@ def get_preference_matrix_2(points, mode):
     LINE_MSS = 2
     CIRCLE_MSS = 3
 
-    threshold = 2  # to decide better
+    threshold = 3  # to decide better
 
     num_samplings = K*len(points)
     pref_mat = np.zeros((len(points), num_samplings))

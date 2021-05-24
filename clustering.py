@@ -174,7 +174,8 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
 
                 # TODO: case sigma=0 (same error for multiple points)
                 # TODO: needs to work also on the parameters, there are problem when recognizing a model in front of another
-                g += (float(rho[k]) * (float(err[k]) / sigma) ** 2)#+(lambda1 * d * len(cluster) + lambda2 * u)
+                g += (float(rho[k]) * (float(err[k]) / sigma) ** 2)
+            g+=(lambda1 * d * len(cluster) + lambda2 * u)
     else :
         g = inf
 

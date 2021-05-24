@@ -17,7 +17,7 @@ def generate_points(model = 1):
 
     circ_ideal_in = np.column_stack((x_circ_in, y_circ_in))
     circ_in = circ_ideal_in
-    circ_in += np.random.normal(0, 0.00001, circ_in.shape)
+    circ_in += np.random.normal(0, 0.5, circ_in.shape)
     # -------------------------------------------------------------------------------
     # Generate points on outer circle
     # -------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ def generate_points(model = 1):
 
     circ_ideal_out = np.column_stack((x_circ_out, y_circ_out))
     circ_out = circ_ideal_out
-    circ_out += np.random.normal(0, 2.4, circ_out.shape)
+    circ_out += np.random.normal(0, 0.5, circ_out.shape)
 
     # -------------------------------------------------------------------------------
     # Generate points on lines
@@ -41,7 +41,7 @@ def generate_points(model = 1):
     y1 = m_ideal1 * x1 + q_ideal1
     line_ideal1 = np.column_stack((x1, y1))
     line1 = line_ideal1
-    line1 += np.random.normal(0, 2.4, line1.shape)
+    line1 += np.random.normal(0, 0.5, line1.shape)
 
     m_ideal2 = -1
     q_ideal2 = 45 + C_out[1]
@@ -50,7 +50,7 @@ def generate_points(model = 1):
     y2 = m_ideal2 * x2 + q_ideal2
     line_ideal2 = np.column_stack((x2, y2))
     line2 = line_ideal2
-    line2 += np.random.normal(0, 2.4, line2.shape)
+    line2 += np.random.normal(0, 0.5, line2.shape)
 
     m_ideal3 = 1
     q_ideal3 = -45 + C_out[1]
@@ -59,7 +59,7 @@ def generate_points(model = 1):
     y3 = m_ideal3 * x3 + q_ideal3
     line_ideal3 = np.column_stack((x3, y3))
     line3 = line_ideal3
-    line3 += np.random.normal(0, 2.4, line3.shape)
+    line3 += np.random.normal(0, 0.5, line3.shape)
 
     m_ideal4 = -1
     q_ideal4 = -45 + C_out[1]
@@ -68,10 +68,10 @@ def generate_points(model = 1):
     y4 = m_ideal4 * x4 + q_ideal4
     line_ideal4 = np.column_stack((x4, y4))
     line4 = line_ideal4
-    line4 += np.random.normal(0, 0.00001, line4.shape)
+    line4 += np.random.normal(0, 0.5, line4.shape)
 
     # add random noise
-    random_noise = np.random.uniform(-100, 100, (50, 2))
+    random_noise = np.random.uniform(-100, 100, (100, 2))
 
     # -------------------------------------------------------------------------------
     # Plot
@@ -130,7 +130,7 @@ def visualize_clusters(clusters, points):
 
     for cluster in clusters:
         print("N° of points: " + str(len(cluster)))
-        if(len(cluster)>3):
+        if(len(cluster)>10):
             color=[(rand.random(),rand.random(),rand.random())]
             rand.random()
             for index in cluster:
