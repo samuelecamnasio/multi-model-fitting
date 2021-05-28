@@ -167,6 +167,7 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
             if(len(p_of_cluster)==2):
                 g=inf
             else:
+                print("\n\nentrato (g=100)\n\n")
                 g=100
         else:
             rho = rho_calculation(err)
@@ -193,3 +194,9 @@ def rho_calculation(
             rho[k] = 1
 
     return rho
+
+def delete_outliers(clusters, threshold):
+
+    clusters[:] = [cluster for cluster in clusters if not len(cluster)<threshold]
+
+    return clusters

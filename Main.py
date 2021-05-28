@@ -5,7 +5,7 @@ from clustering import *
 
 if __name__ == "__main__":
     # Extract points from the .mat or the generated points
-    points = generate_points(1) # 1 complete, 2 test line and circle, anything else is test with only one line
+    points = generate_points(2, 1.5) # 1 complete, 2 test line and circle, anything else is test with only one line, 2nd param -> noise
 
     # Compute the preference matrix for both lines and circles
     pref_mat = get_preference_matrix_2(points, "Line")
@@ -13,6 +13,7 @@ if __name__ == "__main__":
 
     # Clustering
     clusters = clustering(pref_mat, points)
+    clusters = delete_outliers(clusters, 15)    #deletes clusters with n° of points below a threshold (2nd parameter)
 
     visualize_clusters(clusters, points)
 

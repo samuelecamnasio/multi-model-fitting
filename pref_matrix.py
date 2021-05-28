@@ -50,12 +50,12 @@ def find_circle(x1, y1, x2, y2, x3, y3) :
     # eqn of circle be x^2 + y^2 + 2*g*x + 2*f*y + c = 0
     # where centre is (h = -g, k = -f) and
     # radius r as r^2 = h^2 + k^2 - c
-    h = -g;
-    k = -f;
-    sqr_of_r = h * h + k * k - c;
+    h = -g
+    k = -f
+    sqr_of_r = h * h + k * k - c
 
     # r is the radius
-    r = round(sqrt(sqr_of_r), 5);
+    r = round(sqrt(sqr_of_r), 5)
 
     return h,k,r
 
@@ -85,7 +85,7 @@ def get_preference_matrix_2(points, mode):
     LINE_MSS = 2
     CIRCLE_MSS = 3
 
-    threshold = 3  # to decide better
+    threshold = 1.5  # to decide better
 
     num_samplings = K*len(points)
     pref_mat = np.zeros((len(points), num_samplings))
@@ -94,15 +94,17 @@ def get_preference_matrix_2(points, mode):
         if mode == "Line":
             mss_indx = sample_points(points, LINE_MSS, "localized")
             for i in range(len(points)):
-                if distance_from_line(points[mss_indx[0]], points[mss_indx[1]], points[i]) < threshold:
-                    pref_mat[i][m] = 1
+                residue = distance_from_line(points[mss_indx[0]], points[mss_indx[1]], points[i])
+                if residue < 5*threshold:
+                    pref_mat[i][m] = np.exp(-residue/threshold)
                 else:
                     pref_mat[i][m] = 0
         elif mode == "Circle":
             mss_indx = sample_points(points, CIRCLE_MSS, "localized")
             for i in range(len(points)):
-                if distance_from_circ(points[mss_indx[0], :], points[mss_indx[1], :], points[mss_indx[2], :], points[i]) < threshold:
-                    pref_mat[i][m] = 1
+                residue = distance_from_circ(points[mss_indx[0], :], points[mss_indx[1], :], points[mss_indx[2], :], points[i])
+                if residue < 5*threshold:
+                    pref_mat[i][m] = np.exp(-residue/threshold)
                 else:
                     pref_mat[i][m] = 0
         else:
