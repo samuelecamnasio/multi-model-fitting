@@ -65,12 +65,12 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
 
         print("Trying to fuse clusters "+str(clusters[pos[cl_0]])+" and "+str(clusters[pos[cl_1]]))
 
-        union_line_score = gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points)
-        line_1_score = gric(clusters[pos[cl_0]], "Line", points)
-        line_2_score = gric(clusters[pos[cl_1]], "Line", points)
-        union_circle_score = gric(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points)
-        circle_1_score = gric(clusters[pos[cl_0]], "Circle", points)
-        circle_2_score = gric(clusters[pos[cl_1]], "Circle", points)
+        union_line_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points)
+        line_1_score = model_selection(clusters[pos[cl_0]], "Line", points)
+        line_2_score = model_selection(clusters[pos[cl_1]], "Line", points)
+        union_circle_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points)
+        circle_1_score = model_selection(clusters[pos[cl_0]], "Circle", points)
+        circle_2_score = model_selection(clusters[pos[cl_1]], "Circle", points)
         #union_circle_score = 10
         #circle_1_score = 1
         #circle_2_score = 1
@@ -134,9 +134,9 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
     return clusters
 
 
-def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circumferences
+def model_selection(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circumferences
 
-    g = 0
+    score = 0
     # cluster contains the indexes of the points that are in the cluster
     p_of_cluster = [points[cluster[0]]]
     for i in range(1, len(cluster)):
@@ -161,26 +161,61 @@ def gric(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circu
             err, sigma = fit_on_fly_circles(p_of_cluster)
             print("Circle residue sum " + str(sum(err)) + " ,circle residue variance " + str(sigma))
 
-        #sigma=1
+        
+        # err -> r
+        # sigma -> delta
+        # u -> P
+        # len(clusters) -> N
 
-        if(sigma == 0):
-            if(len(p_of_cluster)==2):
-                g=inf
-            else:
-                print("\n\nentrato (g=100)\n\n")
-                g=100
-        else:
-            rho = rho_calculation(err)
-            for k in range(0, len(p_of_cluster)):
+        criteria = 1  # 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
 
-                # TODO: case sigma=0 (same error for multiple points)
-                # TODO: needs to work also on the parameters, there are problem when recognizing a model in front of another
-                g += (float(rho[k]) * (float(err[k]) / sigma) ** 2)
-            g+=(lambda1 * d * len(cluster) + lambda2 * u)
+        if criteria == 0 :
+            score = gric(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u)
+        elif criteria == 1:
+            score = mdl(p_of_cluster, err, sigma, len(cluster), u)
+        elif criteria == 2:
+            score = gic()
+        elif criteria == 3:
+            score = gmdl()
+
     else :
-        g = inf
+        score = inf
 
+    return score
+
+def gric(p_of_cluster,r, delta, lambda1, lambda2, d, N, u):
+    g=0
+    if (delta == 0):
+        if (len(p_of_cluster) == 2):
+            g = inf
+        else:
+            print("\n\nentrato (g=100)\n\n")
+            g = 100
+    else:
+        rho = rho_calculation(r)
+        for k in range(0, len(p_of_cluster)):
+            # TODO: case sigma=0 (same error for multiple points)
+            # TODO: needs to work also on the parameters, there are problem when recognizing a model in front of another
+            g += (float(rho[k]) * (float(r[k]) / delta) ** 2)
+        g += (lambda1 * d * N + lambda2 * u)
     return g
+
+def mdl(p_of_cluster,r, delta, N, u):
+    score=0
+    for k in range(0, len(p_of_cluster)):
+        # TODO: case sigma=0 (same error for multiple points)
+        # TODO: needs to work also on the parameters, there are problem when recognizing a model in front of another
+        score += float(r[k])
+    score += (u/2)*np.log(N)*delta**2
+    return score
+
+def gic():
+    score=0
+    return score
+
+def gmdl():
+    score=0
+    return score
 
 
 def rho_calculation(
