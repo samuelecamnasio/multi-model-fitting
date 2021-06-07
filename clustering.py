@@ -144,7 +144,7 @@ def model_selection(cluster, mode, points):  # model_dimension = 2 for lines, = 
 
     lambda1 = 1  # paper multilink, pag.6 (row 555/556)
     lambda2 = 2
-
+    L = 200*200
     d = 1  # number of dimensions modeled (d=3 -> fund. matrix, d=2 -> homography, d=1 -> lines, circumferences)
     if mode == "Line":
         u = 2  # number of model paramters (u=2 for lines, u=3 for circumferences)
@@ -167,7 +167,7 @@ def model_selection(cluster, mode, points):  # model_dimension = 2 for lines, = 
         # u -> P
         # len(clusters) -> N
 
-        criteria = 1  # 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
+        criteria = 3  # 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
 
         if criteria == 0 :
             score = gric(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u)
@@ -176,7 +176,7 @@ def model_selection(cluster, mode, points):  # model_dimension = 2 for lines, = 
         elif criteria == 2:
             score = gic()
         elif criteria == 3:
-            score = gmdl()
+            score = gmdl(p_of_cluster, err, len(cluster), u, sigma, d, L)
 
     else :
         score = inf
@@ -213,8 +213,11 @@ def gic():
     score=0
     return score
 
-def gmdl():
+def gmdl(p_of_cluster, r, N, P, delta, d, L):
     score=0
+    for k in range(0, len(p_of_cluster)):
+        score += float(r[k])**2
+    score -= (N * d + P)*(delta**2) * (np.log(delta/L)**2)
     return score
 
 
