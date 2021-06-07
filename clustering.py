@@ -182,7 +182,7 @@ def model_selection(cluster, mode, points, criteria, verbose=False):  # model_di
         elif criteria == 1:
             score = mdl(p_of_cluster, err, sigma, len(cluster), u)
         elif criteria == 2:
-            score = gic()
+            score = gic(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u)
         elif criteria == 3:
             score = gmdl(p_of_cluster, err, len(cluster), u, sigma, d, L)
 
@@ -217,8 +217,11 @@ def mdl(p_of_cluster,r, delta, N, u):
     score += (u/2)*np.log(N)*delta**2
     return score
 
-def gic():
-    score=0
+def gic(p_of_cluster, r, delta, lambda1, lambda2, d, N, u):
+    score = 0
+    for k in range(0, len(p_of_cluster)):
+        score += float(r[k]) ** 2
+    score += ((lambda1 * d * N + lambda2 * u) * (delta**2))
     return score
 
 def gmdl(p_of_cluster, r, N, P, delta, d, L):

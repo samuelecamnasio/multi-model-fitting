@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-def point_from_image(basewidth, imgType, imgNumber):
+def point_from_image(basewidth, imgType, imgNumber, verbose = False):
 
     cwd = os.getcwd()
     # read/load an image
@@ -22,7 +22,8 @@ def point_from_image(basewidth, imgType, imgNumber):
 
     # resize image
     image = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
-    print(image.shape)
+    if verbose:
+        print(image.shape)
 
     # detection of the edges
     img_edge = cv2.Canny(image,200,600,apertureSize = 5)
@@ -34,8 +35,9 @@ def point_from_image(basewidth, imgType, imgNumber):
                 ans = ans + [[x, y]]
     ans = np.array(ans)
 
-    print(ans.shape)
-    print(ans[0:10, :])
+    if verbose:
+        print(ans.shape)
+        print(ans[0:10, :])
     s=[0.1 for n in range(ans.shape[0])]
     plt.scatter(ans[:,0],ans[:,1],s=s)
 
