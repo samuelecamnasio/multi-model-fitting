@@ -39,7 +39,7 @@ def measure(x):
     return x[-1]
 
 
-def clustering(pref_m, points, dist_type="Tanimoto"):
+def clustering(pref_m, points, criteria, dist_type="Tanimoto" ):
     num_of_pts = pref_m.shape[0]
     pts = range(num_of_pts)
     clusters = [[i] for i in pts]
@@ -65,12 +65,12 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
 
         print("Trying to fuse clusters "+str(clusters[pos[cl_0]])+" and "+str(clusters[pos[cl_1]]))
 
-        union_line_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points)
-        line_1_score = model_selection(clusters[pos[cl_0]], "Line", points)
-        line_2_score = model_selection(clusters[pos[cl_1]], "Line", points)
-        union_circle_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points)
-        circle_1_score = model_selection(clusters[pos[cl_0]], "Circle", points)
-        circle_2_score = model_selection(clusters[pos[cl_1]], "Circle", points)
+        union_line_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points, criteria)
+        line_1_score = model_selection(clusters[pos[cl_0]], "Line", points, criteria)
+        line_2_score = model_selection(clusters[pos[cl_1]], "Line", points, criteria)
+        union_circle_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points, criteria)
+        circle_1_score = model_selection(clusters[pos[cl_0]], "Circle", points, criteria)
+        circle_2_score = model_selection(clusters[pos[cl_1]], "Circle", points, criteria)
         #union_circle_score = 10
         #circle_1_score = 1
         #circle_2_score = 1
@@ -134,7 +134,7 @@ def clustering(pref_m, points, dist_type="Tanimoto"):
     return clusters
 
 
-def model_selection(cluster, mode, points):  # model_dimension = 2 for lines, = 3 for circumferences
+def model_selection(cluster, mode, points, criteria):  # model_dimension = 2 for lines, = 3 for circumferences
 
     score = 0
     # cluster contains the indexes of the points that are in the cluster
@@ -167,7 +167,7 @@ def model_selection(cluster, mode, points):  # model_dimension = 2 for lines, = 
         # u -> P
         # len(clusters) -> N
 
-        criteria = 3  # 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
+        #criteria = 3  # 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
 
         if criteria == 0 :
             score = gric(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u)
