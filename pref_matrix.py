@@ -90,7 +90,9 @@ def get_preference_matrix_2(points, mode, K):
     num_samplings = K*len(points)
     pref_mat = np.zeros((len(points), num_samplings))
 
+    last_percentage = 0
     for m in range(num_samplings):
+        curr_percentage = int((m / num_samplings) * 100)
         if mode == "Line":
             mss_indx = sample_points(points, LINE_MSS, "localized")
             for i in range(len(points)):
@@ -109,7 +111,14 @@ def get_preference_matrix_2(points, mode, K):
                     pref_mat[i][m] = 0
         else:
             raise Exception("get_preference_matrix -> no mode selected")
+        # printing progress percentages
+        if curr_percentage != last_percentage:
+            # change precentage
+            print("\033[A                             \033[A", end = "\r")
+            print("Progress : "+ str(curr_percentage)+"%", end = "")
+            last_percentage = curr_percentage
 
+    print("\r", end="Progress : 100%\n")
     show_pref_matrix(pref_mat, mode)
     return pref_mat
 

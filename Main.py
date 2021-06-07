@@ -5,13 +5,15 @@ from clustering import *
 from pointExtractor import *
 
 if __name__ == "__main__":
+    K = 6  # multiple of the sampling number
     # Extract points from the .mat or the generated points
-    #points = generate_points(2, 1.5) # 1 complete, 2 test line and circle, anything else is test with only one line, 2nd param -> noise
-    points = point_from_image(100, "complex", "1")
+    points = generate_points(2, 1.5) # 1 complete, 2 test line and circle, anything else is test with only one line, 2nd param -> noise
+    #points = point_from_image(100, "shape", "2")
     # Compute the preference matrix for both lines and circles
-    print("computing preference matrix...")
-    pref_mat = get_preference_matrix_2(points, "Line", 2)
-    pref_mat = hstack((pref_mat, get_preference_matrix_2(points, "Circle", 2)))
+    print("computing preference matrix for lines...")
+    pref_mat = get_preference_matrix_2(points, "Line", K)
+    print("computing preference matrix for circles...")
+    pref_mat = hstack((pref_mat, get_preference_matrix_2(points, "Circle", K)))
 
     # Clustering
     print("starting clustering...")

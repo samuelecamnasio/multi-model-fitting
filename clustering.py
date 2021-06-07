@@ -57,7 +57,11 @@ def clustering(pref_m, points, criteria, verbose=False, dist_type="Tanimoto" ):
         # TODO
         x0 = [(cl_i, cl_j, jaccard_distance(clusters[pos[cl_i]], clusters[pos[cl_j]])) for cl_i, cl_j in x0]
 
+    last_percentage = 0
+    pr_count = 0
+    tot = pref_m.shape[0]
     while pref_m.shape[0] > 1:
+        curr_percentage = int(((tot - pref_m.shape[0])/tot) * 100)
         x0.sort(key=measure)
         cl_0, cl_1, min_distance = x0[0]
         if min_distance >= 1:
@@ -127,7 +131,12 @@ def clustering(pref_m, points, criteria, verbose=False, dist_type="Tanimoto" ):
             el[-1] = 2  # set distance at an infinite value
             x0[0] = tuple(el)
 
-
+        if curr_percentage != last_percentage:
+            # change precentage
+            print("\033[A                             \033[A", end = "\r")
+            print("Progress : "+ str(curr_percentage)+"%", end = "")
+            last_percentage = curr_percentage
+    print("\r", end="Progress : 100%\n")
     return clusters
 
 
