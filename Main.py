@@ -7,7 +7,7 @@ from pointExtractor import *
 if __name__ == "__main__":
     # Extract points from the .mat or the generated points
     #points = generate_points(2, 1.5) # 1 complete, 2 test line and circle, anything else is test with only one line, 2nd param -> noise
-    points = point_from_image(100, "shape", "2")
+    points = point_from_image(100, "complex", "1")
     # Compute the preference matrix for both lines and circles
     print("computing preference matrix...")
     pref_mat = get_preference_matrix_2(points, "Line", 2)

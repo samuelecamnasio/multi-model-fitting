@@ -6,10 +6,10 @@ from math import sqrt
 # Fits the input points to a line using the least squares,
 # returns the m and b parameters of a line
 def best_fit_slope_and_intercept(xs, ys):
-    # m = (((mean(xs) * mean(ys)) - mean(xs * ys)) /
-    #      ((mean(xs) * mean(xs)) - mean(xs * xs)))
-    # b = mean(ys) - m * mean(xs)
-    m, b = polyfit(xs, ys, 1)
+    m = (((mean(xs) * mean(ys)) - mean(xs * ys)) /
+          ((mean(xs) * mean(xs)) - mean(xs * xs)))
+    b = mean(ys) - m * mean(xs)
+    #m, b = polyfit(xs, ys, 1)
     return m, b
 
 

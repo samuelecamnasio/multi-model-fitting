@@ -12,7 +12,6 @@ def point_from_image(basewidth, imgType, imgNumber):
         img_path += ".jpg"
     else:
         img_path += ".png"
-    print(img_path)
     image = cv2.imread(img_path)
 
     wpercent = (basewidth / float(image.shape[1]))
@@ -25,14 +24,8 @@ def point_from_image(basewidth, imgType, imgNumber):
     image = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
     print(image.shape)
 
-    # show the input image on the newly created image window
-    cv2.imshow("image", image)
-
     # detection of the edges
     img_edge = cv2.Canny(image,200,600,apertureSize = 5)
-
-    # show the image edges on the newly created image window
-    cv2.imshow("edges", img_edge)
 
     ans = []
     for y in range(0, img_edge.shape[0]):

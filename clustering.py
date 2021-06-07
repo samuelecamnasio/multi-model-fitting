@@ -39,7 +39,7 @@ def measure(x):
     return x[-1]
 
 
-def clustering(pref_m, points, criteria, dist_type="Tanimoto" ):
+def clustering(pref_m, points, criteria, verbose=False, dist_type="Tanimoto" ):
     num_of_pts = pref_m.shape[0]
     pts = range(num_of_pts)
     clusters = [[i] for i in pts]
@@ -62,8 +62,8 @@ def clustering(pref_m, points, criteria, dist_type="Tanimoto" ):
         cl_0, cl_1, min_distance = x0[0]
         if min_distance >= 1:
             break
-
-        print("Trying to fuse clusters "+str(clusters[pos[cl_0]])+" and "+str(clusters[pos[cl_1]]))
+        if verbose:
+            print("Trying to fuse clusters "+str(clusters[pos[cl_0]])+" and "+str(clusters[pos[cl_1]]))
 
         union_line_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points, criteria)
         line_1_score = model_selection(clusters[pos[cl_0]], "Line", points, criteria)
@@ -71,11 +71,9 @@ def clustering(pref_m, points, criteria, dist_type="Tanimoto" ):
         union_circle_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points, criteria)
         circle_1_score = model_selection(clusters[pos[cl_0]], "Circle", points, criteria)
         circle_2_score = model_selection(clusters[pos[cl_1]], "Circle", points, criteria)
-        #union_circle_score = 10
-        #circle_1_score = 1
-        #circle_2_score = 1
-        print("Line scores: "+str(union_line_score)+" union, "+str(line_2_score+line_1_score) + " single")
-        print("Circle scores: " + str(union_circle_score) + " union, " + str(circle_1_score + circle_2_score) + " single")
+        if verbose:
+            print("Line scores: "+str(union_line_score)+" union, "+str(line_2_score+line_1_score) + " single")
+            print("Circle scores: " + str(union_circle_score) + " union, " + str(circle_1_score + circle_2_score) + " single")
 
 
 
@@ -122,9 +120,8 @@ def clustering(pref_m, points, criteria, dist_type="Tanimoto" ):
             new_idx += 1
             x1 = [(cl_i, cl_j, tanimoto_distance(pref_m[pos[cl_i]], pref_m[pos[cl_j]])) for cl_i, cl_j in new_comb]
             x0 += x1
-
-            print("[CLUSTERING] New cluster: " + str(new_cluster)
-                  + "\t-\tTanimoto distance: " + str(min_distance))
+            if verbose:
+                print("[CLUSTERING] New cluster: " + str(new_cluster) + "\t-\tTanimoto distance: " + str(min_distance))
         else:
             el=list(x0[0])
             el[-1] = 2  # set distance at an infinite value
@@ -134,7 +131,7 @@ def clustering(pref_m, points, criteria, dist_type="Tanimoto" ):
     return clusters
 
 
-def model_selection(cluster, mode, points, criteria):  # model_dimension = 2 for lines, = 3 for circumferences
+def model_selection(cluster, mode, points, criteria, verbose=False):  # model_dimension = 2 for lines, = 3 for circumferences
 
     score = 0
     # cluster contains the indexes of the points that are in the cluster
@@ -156,10 +153,12 @@ def model_selection(cluster, mode, points, criteria):  # model_dimension = 2 for
         if mode == "Line":  # if model is a line
             err, sigma = fit_on_fly_lines(
                 p_of_cluster)  # sigma è un multiplo della deviazione standard del rumore sui dati
-            print("Line residue sum "+str(sum(err)) + " ,line residue variance " + str(sigma))
+            if verbose:
+                print("Line residue sum "+str(sum(err)) + " ,line residue variance " + str(sigma))
         elif mode == "Circle":  # if model is a circle (needs at leats 3 points)
             err, sigma = fit_on_fly_circles(p_of_cluster)
-            print("Circle residue sum " + str(sum(err)) + " ,circle residue variance " + str(sigma))
+            if verbose:
+                print("Circle residue sum " + str(sum(err)) + " ,circle residue variance " + str(sigma))
 
         
         # err -> r
