@@ -75,7 +75,7 @@ def clustering(pref_m, points, criteria, verbose=False, dist_type="Tanimoto" ):
     last_percentage = 0
     pr_count = 0
     tot = pref_m.shape[0]
-    print("Staring clustering...")
+    print("Starting clustering...")
     while pref_m.shape[0] > 1:
         curr_percentage = int(((tot - pref_m.shape[0])/tot) * 100)
         x0.sort(key=measure)
@@ -163,7 +163,7 @@ def model_selection(cluster, mode, points, criteria, verbose=False):  # model_di
     p_of_cluster = [points[cluster[0]]]
     for i in range(1, len(cluster)):
         p_of_cluster = np.vstack((p_of_cluster, points[cluster[i]]))
-
+    #print(str(p_of_cluster) + " len " + str(len(p_of_cluster)))
     lambda1 = 1  # paper multilink, pag.6 (row 555/556)
     lambda2 = 2
     L = 200*200
@@ -176,6 +176,7 @@ def model_selection(cluster, mode, points, criteria, verbose=False):  # model_di
     if (len(p_of_cluster) > 1 and mode == "Line") or (len(p_of_cluster) > 2 and mode == "Circle"):
 
         if mode == "Line":  # if model is a line
+            #print("In line evaluation")
             err, sigma = fit_on_fly_lines(
                 p_of_cluster)  # sigma è un multiplo della deviazione standard del rumore sui dati
             if verbose:
@@ -185,7 +186,9 @@ def model_selection(cluster, mode, points, criteria, verbose=False):  # model_di
             if verbose:
                 print("Circle residue sum " + str(sum(err)) + " ,circle residue variance " + str(sigma))
 
-        
+
+            #print("Jumped everything")
+
         # err -> r
         # sigma -> delta
         # u -> P
@@ -194,7 +197,8 @@ def model_selection(cluster, mode, points, criteria, verbose=False):  # model_di
         #criteria = 3  # 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
 
         if criteria == 0 :
-            score = gric(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u)
+            score = gric(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u, mode)
+            #print("Computed score: "+str(score))
         elif criteria == 1:
             score = mdl(p_of_cluster, err, sigma, len(cluster), u)
         elif criteria == 2:
@@ -202,18 +206,21 @@ def model_selection(cluster, mode, points, criteria, verbose=False):  # model_di
         elif criteria == 3:
             score = gmdl(p_of_cluster, err, len(cluster), u, sigma, d, L)
 
-    else :
+    else:
         score = inf
 
     return score
 
-def gric(p_of_cluster,r, delta, lambda1, lambda2, d, N, u):
+def gric(p_of_cluster,r, delta, lambda1, lambda2, d, N, u, mode):
     g=0
     if (delta == 0):
         if (len(p_of_cluster) == 2):
             g = inf
+        if mode == "Line":
+            # TODO here the default score should be changed
+            g = 100
         else:
-            print("\n\nentrato (g=100)\n\n")
+            #print("\n\nentrato (g=100)\n\n")
             g = 100
     else:
         rho = rho_calculation(r)

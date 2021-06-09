@@ -29,7 +29,7 @@ def point_from_image(basewidth, imgType, imgNumber, verbose = False):
     # TODO: maybe there are too many points taken from the edge detection
     # now trying to halve them (should still maintain enough points)
     ans = []
-    for y in range(0, img_edge.shape[0]):
+    for y in reversed(range(0, img_edge.shape[0])):
         for x in range(0, img_edge.shape[1]):
             if img_edge[y, x] != 0 and x % 2 == 0:
                 ans = ans + [[x, y]]
