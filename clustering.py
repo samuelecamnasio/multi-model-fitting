@@ -47,11 +47,26 @@ def clustering(pref_m, points, criteria, verbose=False, dist_type="Tanimoto" ):
 
     pos = {i: i for i in pts}
 
-    x0 = list(itertools.combinations(range(num_of_pts), 2))
+    temp = list(itertools.combinations(range(num_of_pts), 2))
 
+    print("Starting computing intercluster distance...")
     if dist_type == "Tanimoto":
         # Using Tanimoto distance
-        x0 = [(cl_i, cl_j, tanimoto_distance(pref_m[cl_i], pref_m[cl_j])) for cl_i, cl_j in x0]
+        last_percentage = 0
+        tot = len(temp)
+        count = 0
+        x0 = []
+        for cl_i, cl_j in temp:
+            curr_percentage = int((count/tot) * 100)
+            count = count + 1
+            x0.append((cl_i, cl_j, tanimoto_distance(pref_m[cl_i], pref_m[cl_j])))
+            if curr_percentage != last_percentage:
+                # change precentage
+                print("\033[A                             \033[A", end="\r")
+                print("Progress : " + str(curr_percentage) + "%", end="")
+                last_percentage = curr_percentage
+        print("\r", end="Progress : 100%\n")
+        temp = []
     elif dist_type == "Jaccard":
         # Using Jaccard distance
         # TODO
@@ -60,6 +75,7 @@ def clustering(pref_m, points, criteria, verbose=False, dist_type="Tanimoto" ):
     last_percentage = 0
     pr_count = 0
     tot = pref_m.shape[0]
+    print("Staring clustering...")
     while pref_m.shape[0] > 1:
         curr_percentage = int(((tot - pref_m.shape[0])/tot) * 100)
         x0.sort(key=measure)
