@@ -16,7 +16,6 @@ if __name__ == "__main__":
     pref_mat = hstack((pref_mat, get_preference_matrix_2(points, "Circle", K)))
 
     # Clustering
-    print("starting clustering...")
     clusters = clustering(pref_mat, points, 0) #criteria: 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
     clusters = delete_outliers(clusters, 15)    #deletes clusters with n° of points below a threshold (2nd parameter)
 
