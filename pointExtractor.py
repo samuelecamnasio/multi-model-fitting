@@ -18,8 +18,6 @@ def point_from_image(basewidth, imgType, imgNumber, verbose = False):
     hsize = int((float(image.shape[0]) * float(wpercent)))
     dim = (basewidth, hsize)
 
-
-
     # resize image
     image = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
     if verbose:
@@ -40,7 +38,7 @@ def point_from_image(basewidth, imgType, imgNumber, verbose = False):
     if verbose:
         print(ans.shape)
         print(ans[0:10, :])
-    s=[0.1 for n in range(ans.shape[0])]
-    plt.scatter(ans[:,0],ans[:,1],s=s)
+    s = [0.1 for n in range(ans.shape[0])]
+    plt.scatter(ans[:, 0], ans[:, 1], s=s)
 
     return ans
