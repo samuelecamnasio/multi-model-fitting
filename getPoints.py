@@ -6,6 +6,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
 def generate_points(model = 1, noise = 0.5):
+    real_clusters=[]
     # -------------------------------------------------------------------------------
     # Generate points on inner circle
     # -------------------------------------------------------------------------------
@@ -121,7 +122,9 @@ def generate_points(model = 1, noise = 0.5):
         figure = line4
         figure = np.vstack((figure, random_noise))
 
-    return figure
+    real_clusters=real_cluster_composition(model, line1, line2, line3, line4, circ_in, circ_out)
+
+    return figure, real_clusters
 
 
 def visualize_clusters(clusters, points):
@@ -148,3 +151,54 @@ def show_pref_matrix(pref_m, label_k):
     fig.suptitle(label_k)
     fig.tight_layout()
     plt.show()
+
+def real_cluster_composition(model, line1, line2, line3, line4, circ_in, circ_out):
+    real_clusters=[]
+    nc = []
+    k = 0
+    if model == 1:  # 4 lines 2 circles
+        for i in range(k, line1.shape[0]):
+            nc.append(i)
+        real_clusters.append(nc)
+        nc = []
+        k += line1.shape[0]
+        for i in range(k, k + line2.shape[0]):
+            nc.append(i)
+        real_clusters.append(nc)
+        nc = []
+        k += line2.shape[0]
+        for i in range(k, k + line3.shape[0]):
+            nc.append(i)
+        real_clusters.append(nc)
+        nc = []
+        k += line3.shape[0]
+        for i in range(k, k + line4.shape[0]):
+            nc.append(i)
+        real_clusters.append(nc)
+        nc = []
+        k += line4.shape[0]
+        for i in range(k, k + circ_in.shape[0]):
+            nc.append(i)
+        real_clusters.append(nc)
+        nc = []
+        k += circ_in.shape[0]
+        for i in range(k, k + circ_out.shape[0]):
+            nc.append(i)
+        real_clusters.append(nc)
+
+    elif model == 2:
+        for i in range(k, line4.shape[0]):
+            nc.append(i)
+        real_clusters.append(nc)
+        nc = []
+        k += line4.shape[0]
+        for i in range(k, k + circ_in.shape[0]):
+            nc.append(i)
+        real_clusters.append(nc)
+
+    else:
+        for i in range(k, line4.shape[0]):
+            nc.append(i)
+        real_clusters.append(nc)
+
+    return real_clusters
