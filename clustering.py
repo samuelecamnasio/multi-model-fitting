@@ -274,7 +274,7 @@ def delete_outliers(clusters, threshold):
     return clusters
 
 def performance_evaluation(real_clusters, predicted_clusters):
-    misclass_error=[]
+    misclass_errors=[]
     for real_cluster in real_clusters:
         max_common_el = 0
         for predicted_cluster in predicted_clusters:
@@ -282,7 +282,8 @@ def performance_evaluation(real_clusters, predicted_clusters):
             intersection_as_list = list(intersection)
             if len(intersection_as_list) > max_common_el:
                 max_common_el=len(intersection_as_list)
-        misclass_error.append(format(1-(max_common_el/len(real_cluster)), '.3f'))
+        misclass_errors.append(format(1-(max_common_el/len(real_cluster)), '.3f'))
 
     print("Misclassification errors:")
-    print(misclass_error)
+    for misclass_error in misclass_errors:
+        print(misclass_error)

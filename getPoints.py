@@ -126,22 +126,6 @@ def generate_points(model = 1, noise = 0.5):
 
     return figure, real_clusters
 
-
-def visualize_clusters(clusters, points):
-    plt.figure(2)
-    plt.title('Clusters')
-
-    for cluster in clusters:
-        print("N° of points: " + str(len(cluster)))
-        color=[(rand.random(),rand.random(),rand.random())]
-        rand.random()
-        for index in cluster:
-            #print("caio: "+str(points[index][0]))
-            plt.scatter(points[index][0], points[index][1], color=color)
-
-    plt.show()
-
-
 def show_pref_matrix(pref_m, label_k):
     fig, ax = plt.subplots(figsize=(5, 1.5))
     matr = ax.imshow(pref_m, cmap='Blues', interpolation='nearest')
@@ -202,3 +186,60 @@ def real_cluster_composition(model, line1, line2, line3, line4, circ_in, circ_ou
         real_clusters.append(nc)
 
     return real_clusters
+
+def visualize_clusters(clusters, points):
+    plt.figure(2)
+    plt.title('Clusters')
+
+    for cluster in clusters:
+        print("N° of points: " + str(len(cluster)))
+        color=[(rand.random(),rand.random(),rand.random())]
+        rand.random()
+        for index in cluster:
+            #print("caio: "+str(points[index][0]))
+            plt.scatter(points[index][0], points[index][1], color=color)
+
+    plt.show()
+
+def visualize_clusters_all_methods(clusters_gric, clusters_mdl, clusters_gic, clusters_gmdl, points):
+    fig, axs = plt.subplots(2, 2)
+
+    plt.title('Clusters')
+
+    for cluster in clusters_gric:
+        print("N° of points: " + str(len(cluster)))
+        color=[(rand.random(),rand.random(),rand.random())]
+        rand.random()
+        for index in cluster:
+            #print("caio: "+str(points[index][0]))
+            axs[0, 0].scatter(points[index][0], points[index][1], color=color)
+            axs[0, 0].set_title('Clusters with GRIC')
+
+    for cluster in clusters_mdl:
+        print("N° of points: " + str(len(cluster)))
+        color=[(rand.random(),rand.random(),rand.random())]
+        rand.random()
+        for index in cluster:
+            #print("caio: "+str(points[index][0]))
+            axs[0, 1].scatter(points[index][0], points[index][1], color=color)
+            axs[0, 1].set_title('Clusters with MDL')
+
+    for cluster in clusters_gic:
+        print("N° of points: " + str(len(cluster)))
+        color=[(rand.random(),rand.random(),rand.random())]
+        rand.random()
+        for index in cluster:
+            #print("caio: "+str(points[index][0]))
+            axs[1, 0].scatter(points[index][0], points[index][1], color=color)
+            axs[1, 0].set_title('Clusters with GIC')
+
+    for cluster in clusters_gmdl:
+        print("N° of points: " + str(len(cluster)))
+        color=[(rand.random(),rand.random(),rand.random())]
+        rand.random()
+        for index in cluster:
+            #print("caio: "+str(points[index][0]))
+            axs[1, 1].scatter(points[index][0], points[index][1], color=color)
+            axs[1, 1].set_title('Clusters with GMDL')
+
+    plt.show()
