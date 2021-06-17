@@ -103,6 +103,9 @@ def get_preference_matrix_2(points, mode, K):
                     pref_mat[i][m] = 0
         elif mode == "Circle":
             mss_indx = sample_points(points, CIRCLE_MSS, "localized")
+            while on_a_line(points[mss_indx[0], :], points[mss_indx[1], :], points[mss_indx[2], :]):
+                mss_indx = sample_points(points, CIRCLE_MSS, "localized")
+
             for i in range(len(points)):
                 residue = distance_from_circ(points[mss_indx[0], :], points[mss_indx[1], :], points[mss_indx[2], :], points[i])
                 if residue < 5*threshold:
@@ -122,6 +125,15 @@ def get_preference_matrix_2(points, mode, K):
     show_pref_matrix(pref_mat, mode)
     return pref_mat
 
+
+def on_a_line(p1, p2, p3):
+    x1 = p1[0]
+    y1 = p1[1]
+    x2 = p2[0]
+    y2 = p2[1]
+    x3 = p3[0]
+    y3 = p3[1]
+    return (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) == 0
 
 def sample_points(points, MSS, mode="uniform"):
     if mode == "uniform":

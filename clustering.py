@@ -204,7 +204,7 @@ def model_selection(cluster, mode, points, criteria, verbose=False):  # model_di
         elif criteria == 2:
             score = gic(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u)
         elif criteria == 3:
-            score = gmdl(p_of_cluster, err, len(cluster), u, sigma, d, L)
+            score = gmdl(p_of_cluster, err, len(cluster), u, sigma, d, L, mode)
 
     else:
         score = inf
@@ -247,11 +247,21 @@ def gic(p_of_cluster, r, delta, lambda1, lambda2, d, N, u):
     score += ((lambda1 * d * N + lambda2 * u) * (delta**2))
     return score
 
-def gmdl(p_of_cluster, r, N, P, delta, d, L):
+def gmdl(p_of_cluster, r, N, P, delta, d, L, mode):
     score=0
-    for k in range(0, len(p_of_cluster)):
-        score += float(r[k])**2
-    score -= (N * d + P)*(delta**2) * (np.log(delta/L)**2)
+    if (delta == 0):
+        if (len(p_of_cluster) == 2):
+            score = inf
+        if mode == "Line":
+            # TODO here the default score should be changed
+            score = 100
+        else:
+            #print("\n\nentrato (g=100)\n\n")
+            score = 100
+    else:
+        for k in range(0, len(p_of_cluster)):
+            score += float(r[k])**2
+        score -= (N * d + P)*(delta**2) * (np.log(delta/L)**2)
     return score
 
 
