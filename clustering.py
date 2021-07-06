@@ -16,30 +16,14 @@ def tanimoto_distance(i, j):
     return t_distance
 
 
-# TODO
-def jaccard_distance(A, B):  # A and B are points clusters
-    # print(str(A.name) + " : " + str(A.points))
-    # print(str(B.name) + " : " + str(B.points))
 
-    # union = Cluster("", [], 0, A.type)
-    union = A
-    # for point in A.points:
-    #    union.points += [point]
-    # intersection = Cluster("", [], 0, A.type)
-    intersection = []
-    for point in B:
-        if point in A:
-            intersection += [point]
-        if point not in A:
-            union += [point]
-    return (len(union) - len(intersection)) / len(union)
 
 
 def measure(x):
     return x[-1]
 
 
-def clustering(pref_m, points, criteria, verbose=False, dist_type="Tanimoto" ):
+def clustering(pref_m, points, criteria, verbose=False ):
     num_of_pts = pref_m.shape[0]
     pts = range(num_of_pts)
     clusters = [[i] for i in pts]
@@ -50,27 +34,22 @@ def clustering(pref_m, points, criteria, verbose=False, dist_type="Tanimoto" ):
     temp = list(itertools.combinations(range(num_of_pts), 2))
 
     print("Starting computing intercluster distance...")
-    if dist_type == "Tanimoto":
-        # Using Tanimoto distance
-        last_percentage = 0
-        tot = len(temp)
-        count = 0
-        x0 = []
-        for cl_i, cl_j in temp:
-            curr_percentage = int((count/tot) * 100)
-            count = count + 1
-            x0.append((cl_i, cl_j, tanimoto_distance(pref_m[cl_i], pref_m[cl_j])))
-            if curr_percentage != last_percentage:
-                # change precentage
-                print("\033[A                             \033[A", end="\r")
-                print("Progress : " + str(curr_percentage) + "%", end="")
-                last_percentage = curr_percentage
-        print("\r", end="Progress : 100%\n")
-        temp = []
-    elif dist_type == "Jaccard":
-        # Using Jaccard distance
-        # TODO
-        x0 = [(cl_i, cl_j, jaccard_distance(clusters[pos[cl_i]], clusters[pos[cl_j]])) for cl_i, cl_j in x0]
+    # Using Tanimoto distance
+    last_percentage = 0
+    tot = len(temp)
+    count = 0
+    x0 = []
+    for cl_i, cl_j in temp:
+        curr_percentage = int((count/tot) * 100)
+        count = count + 1
+        x0.append((cl_i, cl_j, tanimoto_distance(pref_m[cl_i], pref_m[cl_j])))
+        if curr_percentage != last_percentage:
+            # change precentage
+            print("\033[A                             \033[A", end="\r")
+            print("Progress : " + str(curr_percentage) + "%", end="")
+            last_percentage = curr_percentage
+    print("\r", end="Progress : 100%\n")
+    temp = []
 
     last_percentage = 0
     pr_count = 0
