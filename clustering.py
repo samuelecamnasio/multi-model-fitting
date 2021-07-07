@@ -218,10 +218,10 @@ def gric(p_of_cluster,r, delta, lambda1, lambda2, d, N, u, mode):
             g = inf
         if mode == "Line":
             # TODO here the default score should be changed
-            g = 100
+            g = (lambda1 * d * N + lambda2 * u)
         else:
             #print("\n\nentrato (g=100)\n\n")
-            g = 100
+            g = (lambda1 * d * N + lambda2 * u)
     else:
         rho = rho_calculation(r)
         for k in range(0, len(p_of_cluster)):
@@ -254,10 +254,10 @@ def gmdl(p_of_cluster, r, N, P, delta, d, L, mode):
             score = inf
         if mode == "Line":
             # TODO here the default score should be changed
-            score = 100
+            score = inf
         else:
             #print("\n\nentrato (g=100)\n\n")
-            score = 100
+            score = inf
     else:
         for k in range(0, len(p_of_cluster)):
             score += float(r[k])**2
