@@ -52,15 +52,15 @@ def find_circle(x1, y1, x2, y2, x3, y3) :
     # radius r as r^2 = h^2 + k^2 - c
     h = -g
     k = -f
-    sqr_of_r = h * h + k * k - c
-
-    # r is the radius
-    r = round(sqrt(sqr_of_r), 5)
-
+    sqr_of_r = pow(h, 2) + pow(k, 2) - c
+    if sqr_of_r<0:
+        r = "err"
+    else:
+        # r is the radius
+        r = round(sqrt(sqr_of_r), 5)
     return h,k,r
 
-def distance_from_circ(p1, p2, p3, p4):  # calculates the normal distance between a point p4 and a circle passing through p1, p2 and p3
-    h,k,r = find_circle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1]) #find centre and radius
+def distance_from_circ(h, k, r, p4):  # calculates the normal distance between a point p4 and a circle passing through p1, p2 and p3
     return abs(sqrt(pow(p4[0]-h,2) + pow(p4[1]-k,2)) - r)
 
 # def get_preference_matrix(points):
@@ -105,9 +105,15 @@ def get_preference_matrix_2(points, mode, K):
             mss_indx = sample_points(points, CIRCLE_MSS, "localized")
             while on_a_line(points[mss_indx[0], :], points[mss_indx[1], :], points[mss_indx[2], :]):
                 mss_indx = sample_points(points, CIRCLE_MSS, "localized")
+            h,k,r = find_circle(points[mss_indx[0], 0], points[mss_indx[0], 1], points[mss_indx[1], 0], points[mss_indx[1], 1], points[mss_indx[2], 0], points[mss_indx[2], 1])
+            while r == "err":
+                mss_indx = sample_points(points, CIRCLE_MSS, "localized")
+                while on_a_line(points[mss_indx[0], :], points[mss_indx[1], :], points[mss_indx[2], :]):
+                    mss_indx = sample_points(points, CIRCLE_MSS, "localized")
+                h,k,r = find_circle(points[mss_indx[0], 0], points[mss_indx[0], 1], points[mss_indx[1], 0], points[mss_indx[1], 1], points[mss_indx[2], 0], points[mss_indx[2], 1])
 
             for i in range(len(points)):
-                residue = distance_from_circ(points[mss_indx[0], :], points[mss_indx[1], :], points[mss_indx[2], :], points[i])
+                residue = distance_from_circ(h, k, r, points[i])
                 if residue < 5*threshold:
                     pref_mat[i][m] = np.exp(-residue/threshold)
                 else:
