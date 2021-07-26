@@ -23,7 +23,7 @@ def measure(x):
     return x[-1]
 
 
-def clustering(pref_m, points, criteria, verbose=False ):
+def clustering(pref_m, points, criteria, lambda1, lambda2, verbose=False ):
     clustering_try = 0
     clustering_suc = 0
     medium_first_cont = 0
@@ -68,13 +68,13 @@ def clustering(pref_m, points, criteria, verbose=False ):
         if verbose:
             print("Trying to fuse clusters "+str(clusters[pos[cl_0]])+" and "+str(clusters[pos[cl_1]]))
         clustering_try = clustering_try + 1
-        union_line_score, first_line_cont, second_line_cont = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points, criteria)
-        line_1_score, dump1, dump2 = model_selection(clusters[pos[cl_0]], "Line", points, criteria)
-        line_2_score, dump1, dump2 = model_selection(clusters[pos[cl_1]], "Line", points, criteria)
+        union_line_score, first_line_cont, second_line_cont = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points, criteria, lambda1, lambda2)
+        line_1_score, dump1, dump2 = model_selection(clusters[pos[cl_0]], "Line", points, criteria, lambda1, lambda2)
+        line_2_score, dump1, dump2 = model_selection(clusters[pos[cl_1]], "Line", points, criteria, lambda1, lambda2)
 
-        union_circle_score, first_circ_contr, second_circ_contr = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points, criteria)
-        circle_1_score, dump1, dump2 = model_selection(clusters[pos[cl_0]], "Circle", points, criteria)
-        circle_2_score, dump1, dump2 = model_selection(clusters[pos[cl_1]], "Circle", points, criteria)
+        union_circle_score, first_circ_contr, second_circ_contr = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points, criteria, lambda1, lambda2)
+        circle_1_score, dump1, dump2 = model_selection(clusters[pos[cl_0]], "Circle", points, criteria, lambda1, lambda2)
+        circle_2_score, dump1, dump2 = model_selection(clusters[pos[cl_1]], "Circle", points, criteria, lambda1, lambda2)
 
         if verbose:
             print("Line scores: "+str(union_line_score)+" union, "+str(line_2_score+line_1_score) + " single")
@@ -142,7 +142,7 @@ def clustering(pref_m, points, criteria, verbose=False ):
     return clusters, clustering_try, clustering_suc, medium_first_cont, medium_second_cont
 
 
-def model_selection(cluster, mode, points, criteria, verbose=False):  # model_dimension = 2 for lines, = 3 for circumferences
+def model_selection(cluster, mode, points, criteria, lambda1, lambda2, verbose=False):  # model_dimension = 2 for lines, = 3 for circumferences
 
     score = 0
     # cluster contains the indexes of the points that are in the cluster
@@ -150,8 +150,6 @@ def model_selection(cluster, mode, points, criteria, verbose=False):  # model_di
     for i in range(1, len(cluster)):
         p_of_cluster = np.vstack((p_of_cluster, points[cluster[i]]))
     #print(str(p_of_cluster) + " len " + str(len(p_of_cluster)))
-    lambda1 = 1  # paper multilink, pag.6 (row 555/556)
-    lambda2 = 2
     L = 200*200
     d = 1  # number of dimensions modeled (d=3 -> fund. matrix, d=2 -> homography, d=1 -> lines, circumferences)
     if mode == "Line":
