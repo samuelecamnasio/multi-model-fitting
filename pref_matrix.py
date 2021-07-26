@@ -1,6 +1,5 @@
 import scipy.io
 import numpy as np
-from Cluster import Cluster
 from LineFitter import fit_on_fly_lines
 from CircleFitter import fit_on_fly_circles
 from math import sqrt

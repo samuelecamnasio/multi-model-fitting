@@ -135,7 +135,7 @@ def generate_points2(model = 1, noise = 0.5):
 
     circ_ideal_1 = np.column_stack((x_circ_1, y_circ_1))
     circ_1 = circ_ideal_1
-    circ_1 += np.random.normal(0, 1.5, circ_1.shape)
+    circ_1 += np.random.normal(0, noise, circ_1.shape)
 
 
     ang_circ_2 = np.linspace(0, 2 * math.pi, 100)  ## linspace(start, end, number)
@@ -146,7 +146,7 @@ def generate_points2(model = 1, noise = 0.5):
 
     circ_ideal_2 = np.column_stack((x_circ_2, y_circ_2))
     circ_2 = circ_ideal_2
-    circ_2 += np.random.normal(0, 1.5, circ_2.shape)
+    circ_2 += np.random.normal(0, noise, circ_2.shape)
 
     ang_circ_3 = np.linspace(0, 2 * math.pi, 100)  ## linspace(start, end, number)
     C_3 = [50, -50]
@@ -156,7 +156,7 @@ def generate_points2(model = 1, noise = 0.5):
 
     circ_ideal_3 = np.column_stack((x_circ_3, y_circ_3))
     circ_3 = circ_ideal_3
-    circ_3 += np.random.normal(0, 1.5, circ_3.shape)
+    circ_3 += np.random.normal(0, noise, circ_3.shape)
 
     m_ideal1 = 1
     q_ideal1 = -50
@@ -165,7 +165,7 @@ def generate_points2(model = 1, noise = 0.5):
     y1 = m_ideal1 * x1 + q_ideal1
     line_ideal1 = np.column_stack((x1, y1))
     line1 = line_ideal1
-    line1 += np.random.normal(0, 1.5, line1.shape)
+    line1 += np.random.normal(0, noise, line1.shape)
 
     m_ideal2 = 1.5
     q_ideal2 = -10
@@ -174,7 +174,7 @@ def generate_points2(model = 1, noise = 0.5):
     y2 = m_ideal2 * x2 + q_ideal2
     line_ideal2 = np.column_stack((x2, y2))
     line2 = line_ideal2
-    line2 += np.random.normal(0, 1.5, line2.shape)
+    line2 += np.random.normal(0, noise, line2.shape)
 
     m_ideal3 = -1
     q_ideal3 = 50
@@ -183,7 +183,7 @@ def generate_points2(model = 1, noise = 0.5):
     y3 = m_ideal3 * x3 + q_ideal3
     line_ideal3 = np.column_stack((x3, y3))
     line3 = line_ideal3
-    line3 += np.random.normal(0, 1.5, line3.shape)
+    line3 += np.random.normal(0, noise, line3.shape)
 
 
     # add random noise
@@ -433,7 +433,7 @@ def visualize_clusters_all_methods(clusters_gric, clusters_mdl, clusters_gic, cl
 
     for cluster in clusters_gic:
         print("N° of points: " + str(len(cluster)))
-        color=[(rand.random(),rand.random(),rand.random())]
+        color=[(rand.random(), rand.random(), rand.random())]
         rand.random()
         for index in cluster:
             #print("caio: "+str(points[index][0]))
