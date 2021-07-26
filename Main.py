@@ -3,8 +3,9 @@ from pref_matrix import *
 from numpy import *
 from clustering import *
 from pointExtractor import *
-
+import time
 if __name__ == "__main__":
+    start_time = time.time()
     cluster_res_try = []
     cluster_res_suc = []
     K = 3  # multiple of the sampling number
@@ -17,27 +18,52 @@ if __name__ == "__main__":
     pref_mat = get_preference_matrix_2(points, "Line", K)
     print("computing preference matrix for circles...")
     pref_mat = hstack((pref_mat, get_preference_matrix_2(points, "Circle", K)))
+    partial_before_clustering = time.time() - start_time
 
     # Clustering (criteria: 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL)
     print("\nGRIC:")
-    predicted_clusters_gric, a, b = clustering(pref_mat, points, 0)
+    start_time = time.time()
+    predicted_clusters_gric, a, b, first, second = clustering(pref_mat, points, 0)
+    print("In : %s seconds" % (time.time() - start_time + partial_before_clustering))
     cluster_res_suc.append(b)
     cluster_res_try.append(a)
+    print("\nMedium first contr: ")
+    print(first)
+    print("\nMedium second contr: ")
+    print(second)
     performance_evaluation(real_clusters, predicted_clusters_gric)
     print("\nMDL:")
-    predicted_clusters_mdl, a, b = clustering(pref_mat, points, 1)
+    start_time = time.time()
+    predicted_clusters_mdl, a, b, first, second= clustering(pref_mat, points, 1)
+    print("In : %s seconds" % (time.time() - start_time + partial_before_clustering))
     cluster_res_suc.append(b)
     cluster_res_try.append(a)
+    print("\nMedium first contr: ")
+    print(first)
+    print("\nMedium second contr: ")
+    print(second)
     performance_evaluation(real_clusters, predicted_clusters_mdl)
     print("\nGIC:")
-    predicted_clusters_gic, a, b  = clustering(pref_mat, points, 2)
+    start_time = time.time()
+    predicted_clusters_gic, a, b, first, second  = clustering(pref_mat, points, 2)
+    print("In : %s seconds" % (time.time() - start_time + partial_before_clustering))
     cluster_res_suc.append(b)
     cluster_res_try.append(a)
+    print("\nMedium first contr: ")
+    print(first)
+    print("\nMedium second contr: ")
+    print(second)
     performance_evaluation(real_clusters, predicted_clusters_gic)
     print("\nGMDL:")
-    predicted_clusters_gmdl, a, b = clustering(pref_mat, points, 3)
+    start_time = time.time()
+    predicted_clusters_gmdl, a, b, first, second = clustering(pref_mat, points, 3)
+    print("In : %s seconds" % (time.time() - start_time + partial_before_clustering))
     cluster_res_suc.append(b)
     cluster_res_try.append(a)
+    print("\nMedium first contr: ")
+    print(first)
+    print("\nMedium second contr: ")
+    print(second)
     performance_evaluation(real_clusters, predicted_clusters_gmdl)
 
     print(cluster_res_try)
@@ -51,5 +77,4 @@ if __name__ == "__main__":
     #visualize_clusters(predicted_clusters , points)
     visualize_clusters_all_methods(predicted_clusters_gric, predicted_clusters_mdl, predicted_clusters_gic, predicted_clusters_gmdl, points)
 
-    ##neds a data structure that sets all distances (truth is new distances have to be computed each time)
 

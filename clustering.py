@@ -26,6 +26,8 @@ def measure(x):
 def clustering(pref_m, points, criteria, verbose=False ):
     clustering_try = 0
     clustering_suc = 0
+    medium_first_cont = 0
+    medium_second_cont = 0
     num_of_pts = pref_m.shape[0]
     pts = range(num_of_pts)
     clusters = [[i] for i in pts]
@@ -66,15 +68,25 @@ def clustering(pref_m, points, criteria, verbose=False ):
         if verbose:
             print("Trying to fuse clusters "+str(clusters[pos[cl_0]])+" and "+str(clusters[pos[cl_1]]))
         clustering_try = clustering_try + 1
-        union_line_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points, criteria)
-        line_1_score = model_selection(clusters[pos[cl_0]], "Line", points, criteria)
-        line_2_score = model_selection(clusters[pos[cl_1]], "Line", points, criteria)
-        union_circle_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points, criteria)
-        circle_1_score = model_selection(clusters[pos[cl_0]], "Circle", points, criteria)
-        circle_2_score = model_selection(clusters[pos[cl_1]], "Circle", points, criteria)
+        union_line_score, first_line_cont, second_line_cont = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points, criteria)
+        line_1_score, dump1, dump2 = model_selection(clusters[pos[cl_0]], "Line", points, criteria)
+        line_2_score, dump1, dump2 = model_selection(clusters[pos[cl_1]], "Line", points, criteria)
+
+        union_circle_score, first_circ_contr, second_circ_contr = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Circle", points, criteria)
+        circle_1_score, dump1, dump2 = model_selection(clusters[pos[cl_0]], "Circle", points, criteria)
+        circle_2_score, dump1, dump2 = model_selection(clusters[pos[cl_1]], "Circle", points, criteria)
+
         if verbose:
             print("Line scores: "+str(union_line_score)+" union, "+str(line_2_score+line_1_score) + " single")
             print("Circle scores: " + str(union_circle_score) + " union, " + str(circle_1_score + circle_2_score) + " single")
+        if union_line_score < (line_1_score + line_2_score):
+            # accepted for line
+            medium_first_cont += first_line_cont
+            medium_second_cont += second_line_cont
+        if union_circle_score < (circle_1_score + circle_2_score):
+            # accepted for circ
+            medium_first_cont += first_circ_contr
+            medium_second_cont += second_line_cont
 
         if union_line_score < (line_1_score + line_2_score) or union_circle_score < (circle_1_score + circle_2_score) :
 
@@ -125,7 +137,9 @@ def clustering(pref_m, points, criteria, verbose=False ):
             print("Progress : "+ str(curr_percentage)+"%", end = "")
             last_percentage = curr_percentage
     print("\r", end="Progress : 100%\n")
-    return clusters, clustering_try, clustering_suc
+    medium_first_cont = medium_first_cont/clustering_suc
+    medium_second_cont = medium_second_cont/clustering_suc
+    return clusters, clustering_try, clustering_suc, medium_first_cont, medium_second_cont
 
 
 def model_selection(cluster, mode, points, criteria, verbose=False):  # model_dimension = 2 for lines, = 3 for circumferences
@@ -169,72 +183,72 @@ def model_selection(cluster, mode, points, criteria, verbose=False):  # model_di
         #criteria = 3  # 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
 
         if criteria == 0 :
-            score = gric(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u, mode)
+            score, first_cont, second_cont = gric(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u, mode)
             #print("Computed score: "+str(score))
         elif criteria == 1:
-            score = mdl(p_of_cluster, err, sigma, len(cluster), u)
+            score, first_cont, second_cont = mdl(p_of_cluster, err, sigma, len(cluster), u)
         elif criteria == 2:
-            score = gic(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u)
+            score, first_cont, second_cont = gic(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u)
         elif criteria == 3:
-            score = gmdl(p_of_cluster, err, len(cluster), u, sigma, d, L, mode)
+            score, first_cont, second_cont = gmdl(p_of_cluster, err, len(cluster), u, sigma, d, L, mode)
 
     else:
         score = inf
+        first_cont = 0
+        second_cont = 0
 
-    return score
+    return score, first_cont, second_cont
 
 def gric(p_of_cluster,r, delta, lambda1, lambda2, d, N, u, mode):
-    g=0
-    if (delta == 0):
-        if (len(p_of_cluster) == 2):
-            g = inf
-        if mode == "Line":
-            # TODO here the default score should be changed
-            g = (lambda1 * d * N + lambda2 * u)
-        else:
-            #print("\n\nentrato (g=100)\n\n")
-            g = (lambda1 * d * N + lambda2 * u)
+    first_cont = 0
+    if delta == 0:
+        first_cont = 0
+        g = (lambda1 * d * N + lambda2 * u)
+        second_cont = g
     else:
         rho = rho_calculation(r)
         for k in range(0, len(p_of_cluster)):
             # TODO: case sigma=0 (same error for multiple points)
             # TODO: needs to work also on the parameters, there are problem when recognizing a model in front of another
-            g += (float(rho[k]) * (float(r[k]) / delta) ** 2)
-        g += (lambda1 * d * N + lambda2 * u)
-    return g
+            first_cont += (float(rho[k]) * (float(r[k]) / delta) ** 2)
+        second_cont = (lambda1 * d * N + lambda2 * u)
+        g = second_cont + first_cont
+    return g, first_cont, second_cont
 
-def mdl(p_of_cluster,r, delta, N, u):
-    score=0
+def mdl(p_of_cluster, r, delta, N, u):
+    first_cont = 0
     for k in range(0, len(p_of_cluster)):
         # TODO: case sigma=0 (same error for multiple points)
         # TODO: needs to work also on the parameters, there are problem when recognizing a model in front of another
-        score += float(r[k])
-    score += (u/2)*np.log(N)*delta**2
-    return score
+        first_cont += float(r[k])**2
+    second_cont = (u/2)*np.log(N)*delta**2
+    score = first_cont + second_cont
+    return score, first_cont, second_cont
 
 def gic(p_of_cluster, r, delta, lambda1, lambda2, d, N, u):
     score = 0
+    first_cont = 0
+    second_cont = 0
     for k in range(0, len(p_of_cluster)):
-        score += float(r[k]) ** 2
-    score += ((lambda1 * d * N + lambda2 * u) * (delta**2))
-    return score
+        first_cont += float(r[k]) ** 2
+    second_cont = ((lambda1 * d * N + lambda2 * u) * (delta**2))
+    score = first_cont + second_cont
+    return score, first_cont, second_cont
 
 def gmdl(p_of_cluster, r, N, P, delta, d, L, mode):
-    score=0
-    if (delta == 0):
-        if (len(p_of_cluster) == 2):
-            score = inf
-        if mode == "Line":
-            # TODO here the default score should be changed
-            score = inf
-        else:
-            #print("\n\nentrato (g=100)\n\n")
-            score = inf
+    score = 0
+    first_cont = 0
+    second_cont = 0
+    if delta == 0:
+        score = inf
+        for k in range(0, len(p_of_cluster)):
+            first_cont += float(r[k]) ** 2
     else:
         for k in range(0, len(p_of_cluster)):
-            score += float(r[k])**2
-        score -= (N * d + P)*(delta**2) * (np.log(delta/L)**2)
-    return score
+            first_cont += float(r[k])**2
+        second_cont = (N * d + P)*(delta**2) * (np.log(delta/L)**2)
+        score = first_cont - second_cont
+    return score, first_cont, second_cont
 
 
 def rho_calculation(
