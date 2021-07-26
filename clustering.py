@@ -24,6 +24,8 @@ def measure(x):
 
 
 def clustering(pref_m, points, criteria, verbose=False ):
+    clustering_try = 0
+    clustering_suc = 0
     num_of_pts = pref_m.shape[0]
     pts = range(num_of_pts)
     clusters = [[i] for i in pts]
@@ -63,7 +65,7 @@ def clustering(pref_m, points, criteria, verbose=False ):
             break
         if verbose:
             print("Trying to fuse clusters "+str(clusters[pos[cl_0]])+" and "+str(clusters[pos[cl_1]]))
-
+        clustering_try = clustering_try + 1
         union_line_score = model_selection(clusters[pos[cl_0]] + clusters[pos[cl_1]], "Line", points, criteria)
         line_1_score = model_selection(clusters[pos[cl_0]], "Line", points, criteria)
         line_2_score = model_selection(clusters[pos[cl_1]], "Line", points, criteria)
@@ -73,16 +75,6 @@ def clustering(pref_m, points, criteria, verbose=False ):
         if verbose:
             print("Line scores: "+str(union_line_score)+" union, "+str(line_2_score+line_1_score) + " single")
             print("Circle scores: " + str(union_circle_score) + " union, " + str(circle_1_score + circle_2_score) + " single")
-
-
-
-        #out = 0
-        #for i in range(len(pref_m)):
-        #    if new_pf[i] > 0:
-        #        out = 1
-        #        print("found at lest one")
-        #        break
-
 
         if union_line_score < (line_1_score + line_2_score) or union_circle_score < (circle_1_score + circle_2_score) :
 
@@ -119,6 +111,7 @@ def clustering(pref_m, points, criteria, verbose=False ):
             new_idx += 1
             x1 = [(cl_i, cl_j, tanimoto_distance(pref_m[pos[cl_i]], pref_m[pos[cl_j]])) for cl_i, cl_j in new_comb]
             x0 += x1
+            clustering_suc = clustering_suc + 1
             if verbose:
                 print("[CLUSTERING] New cluster: " + str(new_cluster) + "\t-\tTanimoto distance: " + str(min_distance))
         else:
@@ -132,7 +125,7 @@ def clustering(pref_m, points, criteria, verbose=False ):
             print("Progress : "+ str(curr_percentage)+"%", end = "")
             last_percentage = curr_percentage
     print("\r", end="Progress : 100%\n")
-    return clusters
+    return clusters, clustering_try, clustering_suc
 
 
 def model_selection(cluster, mode, points, criteria, verbose=False):  # model_dimension = 2 for lines, = 3 for circumferences
