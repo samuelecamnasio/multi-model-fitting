@@ -126,7 +126,7 @@ def generate_points(model = 1, noise = 0.5):
 
     return figure, real_clusters
 
-def generate_points2(model = 1, noise = 0.5):
+def generate_points2(model=1, noise=0.5):
     ang_circ_1 = np.linspace(0, 2 * math.pi, 100)  ## linspace(start, end, number)
     C_1 = [0, 0]
     r_1 = 30
