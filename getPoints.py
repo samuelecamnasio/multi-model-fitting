@@ -161,7 +161,7 @@ def generate_points2(model = 1, noise = 0.5):
     m_ideal1 = 1
     q_ideal1 = -50
 
-    x1 = np.linspace(-25, 120, 60)
+    x1 = np.linspace(-25, 120, 100)
     y1 = m_ideal1 * x1 + q_ideal1
     line_ideal1 = np.column_stack((x1, y1))
     line1 = line_ideal1
@@ -170,7 +170,7 @@ def generate_points2(model = 1, noise = 0.5):
     m_ideal2 = 1.5
     q_ideal2 = -10
 
-    x2 = np.linspace(-25, 70, 60)
+    x2 = np.linspace(-25, 70, 100)
     y2 = m_ideal2 * x2 + q_ideal2
     line_ideal2 = np.column_stack((x2, y2))
     line2 = line_ideal2
@@ -179,7 +179,7 @@ def generate_points2(model = 1, noise = 0.5):
     m_ideal3 = -1
     q_ideal3 = 50
 
-    x3 = np.linspace(-25, 120, 60)
+    x3 = np.linspace(-25, 120, 100)
     y3 = m_ideal3 * x3 + q_ideal3
     line_ideal3 = np.column_stack((x3, y3))
     line3 = line_ideal3

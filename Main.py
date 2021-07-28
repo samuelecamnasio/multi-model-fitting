@@ -8,12 +8,12 @@ if __name__ == "__main__":
     start_time = time.time()
     cluster_res_try = []
     cluster_res_suc = []
-    lambda1 = 1
-    lambda2 = 2
-    K = 2  # multiple of the sampling number
-    noise = 0.5
-    scene = 4
-    cutoff_threshold = 20
+    lambda1 = 2
+    lambda2 = 4
+    K = 6  # multiple of the sampling number
+    noise = 1.5
+    scene = 3
+    cutoff_threshold = 35
     # Generation of points
     # points, real_clusters = generate_points(2, noise) # 1 complete, 2 test line and circle, anything else is test with only one line, 2nd param -> noise
     points, real_clusters = generate_points2(scene, noise) # 1 one line one circle, 2 more lines than circle, 3 more circles than lines, anything else same circles and lines
