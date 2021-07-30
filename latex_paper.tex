@@ -4,6 +4,7 @@
 %\usepackage{enumerate}
 %\usepackage{natbib} %comment out if you do not have the package
 \usepackage{url} % not crucial - just used below for the URL 
+\usepackage{amsmath}
 
 %\pdfminorversion=4
 % NOTE: To produce blinded version, replace "0" with "1" below.
@@ -50,19 +51,26 @@ TODOT OD OTODOT ODO
 Given the high temporal complexity of the algorithm, a careful preprocess has to be performed to achieve two conflicting objectives: reduce the number of input points, avoid oversimplification of the input to prevent loss of features of the image. The approach followed to find the balance between the targets is, for the first aim, a resize of the input image, followed by a sampling\footnote{ from experimental results, discarding uniformly a little over 50\% produces good result without apparent loss of information 
 } over the output of the edge detection. For the second goal a careful fine tuning of the Canny algorithm parameters, in particular the double threshold, is to be implemented; unluckily this can’t be standardized over different images, since each input requires different parameters.
 \subsection{ Conceptual space and preference matrix construction}
-Given X as the input data and THETA class of model, we express the preference p(xi,thethai)  with [xi e X] and [thetai e THETA], over a certain hypothesis model h of [thetai], with the same relaxation of the binary preference set introduced in T-linkage [2], called “preference function of a point (PF)” and defined as:
-[insert equation]
-The preference matrix construction process starts with the creation of a number\footnote{during testing, this was usually three times the number of points extracted from the image for each class} of preliminary sample hypotheses H = Hl U Hc. The single hypothesis [hl e Hl] is constructed by randomly sampling couples of points,  identifying the line that crosses them and populating a column of the matrix with p(xi,thethai)  [for each xi e X] . The hypothesis [hc] is built in a similar manner by sampling triplets of points. Naturally the number of samples for each hypothesis has been decided over the minimum sampling size of each class of model. Given the purely geometric nature of the task, the sampling method used is Localized sampling which randomly selects a single point P and, based on a locality bias, select the neighbors. In this way we are able to exploit local information and explore the hypothesis space at the same time.
+Given $X$ as the input data and $\Theta$ class of model, we express the preference $p(x_i,\theta_i)$  with $x_i \in X$ and $\theta_i \in \Theta$, over a certain hypothesis model $h$ of $\theta_i$, with the same relaxation of the binary preference set introduced in T-linkage [2], called "\textit{preference function of a point} (PF)" and defined as:
+\[ \phi(h) =
+  \begin{cases}
+    e^{-d(x,h)/\tau}       & \quad \text{if } d(x,h)<5\tau \text{}\\
+    0  & \quad \text{otherwise}
+  \end{cases}
+\]
+where $d(x,h)$ is the euclidean distance of point $x$ to the hypotesis $h$.
+\\The preference matrix construction process starts with the creation of a number\footnote{during testing, this was  two, three and six times the number of points extracted from the image for each class} of preliminary sample hypotheses $H = H_l \cup H_c$. The single hypothesis $h_l \in H_l$ is constructed by randomly sampling couples of points,  identifying the line that crosses them and populating a column of the matrix with $p(x_i,\theta_i)$  $\forall x_i \in X$ . The hypothesis $h_c$ is built in a similar manner by sampling triplets of points. Naturally the number of samples for each hypothesis has been decided over the minimum sampling size of each class of model. Given the purely geometric nature of the task, the sampling method used is \textit{Localized Sampling} which randomly selects a single point P and, based on a locality bias, select its neighbors. In this way we are able to exploit local information and explore the hypothesis space at the same time.
 \subsection{Initial clusters}
 Clusters are created and populated by a single point each.  Given now every couple of clusters, the inter-cluster distance between two clusters U and V is defined using the single-linkage rule:
-[inserire come multilink (3)]
+\[ d(U,V) = \min_{\substack{u \in U, v \in V}}d(u,v)\]
 where the metric used to measure distance/similarity in the preference space is the Tanimoto distance [2]:
-[inserire come multilink (2)]
+\[\tau(p(u),p(v)) = \frac{\langle p(u),p(v)\rangle}{\|p(u)\|^2+\|p(v)\|^2-\langle p(u),p(v)\rangle}  
+\]
 \subsection{Clustering}
-The iterative procedure of clustering is the same for the one proposed in MultiLink [1] but the number of model selection methods has been expanded. These are GRIC,GIC.. which will be described in paragraph 3. The on-the-fly fitting methods used are: for the hypothesis in Hl a simple linear regression to find the best-fit slope and intercept (also handling case with infinite slope), for the hypothesis in Hc Hyper Fit [3] has been used.
+The iterative procedure of clustering is the same for the one proposed in MultiLink [1] but the number of model selection methods has been expanded. These are GRIC, GIC, MDL and GMDL which will be described in paragraph 3. The on-the-fly fitting methods used are: for the hypothesis in Hl a simple linear regression to find the best-fit slope and intercept (also handling case with infinite slope), for the hypothesis in Hc Hyper Fit [3] has been used.
 
 \subsection{Outliers rejection}
-The outlier rejection criterion has been chosen following the observation that large clusters of outliers are very unlikely as described in MINPRAN [4]. We decided to avoid finding the right distribution of the probability that the outliers, by coincidence, define a model and consequently assumed that a cardinality-based criterion is sufficient for the scope of the objective, even at the sacrifice of possible small clusters of inliers. In the implementation this has crudely been achieved with a cutoff value for which clusters with less elements are deleted; this, of course, implied a process of fine tuning of the cutoff parameter. The underlying reason for this choice can be found in the non-comparable \footnote{even after the tuning of the Canny parameters} noise level in each picture, and that MultiLink[1], as T-linkage[2], is agnostic about the outlier rejection strategy that comes after.
+The outlier rejection criterion has been chosen following the observation that large clusters of outliers are very unlikely as described in MINPRAN [4]. We decided to avoid finding the right distribution of the probability that the outliers, by coincidence, define a model and consequently assumed that a cardinality-based criterion is sufficient for the scope of the objective, even at the sacrifice of possible small clusters of inliers. In the implementation this has crudely been achieved with a cutoff value for which clusters with less elements are deleted; this, of course, implied a process of fine tuning of the cutoff parameter. The underlying reason for this choice can be found in the non-comparable \footnote{even after the tuning of the Canny parameters} noise level in each picture, and that MultiLink [1], as T-linkage [2], is agnostic about the outlier rejection strategy that comes after.
 
 
 \section{Model selection criteria}
