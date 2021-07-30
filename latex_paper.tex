@@ -1,0 +1,169 @@
+\documentclass[12pt]{article}
+%\usepackage{amsmath}
+\usepackage{graphicx}
+%\usepackage{enumerate}
+%\usepackage{natbib} %comment out if you do not have the package
+\usepackage{url} % not crucial - just used below for the URL 
+
+%\pdfminorversion=4
+% NOTE: To produce blinded version, replace "0" with "1" below.
+\newcommand{\blind}{0}
+
+% DON'T change margins - should be 1 inch all around.
+\addtolength{\oddsidemargin}{-.5in}%
+\addtolength{\evensidemargin}{-1in}%
+\addtolength{\textwidth}{1in}%
+\addtolength{\textheight}{1.7in}%
+\addtolength{\topmargin}{-1in}%
+
+
+\begin{document}
+
+%\bibliographystyle{natbib}
+
+\def\spacingset#1{\renewcommand{\baselinestretch}%
+{#1}\small\normalsize} \spacingset{1}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \title{\bf Computer vision project 2020/2021}
+  \author{Andrea Bonatti 10520865\hspace{.2cm}\\
+    Samuele Bosi 10111111 \\
+    Samuele Camnasio 10111111}
+  \maketitle
+
+\newpage
+\spacingset{1.8} % DON'T change the spacing!
+\section{Problem description}
+\label{sec:probdesrc}
+
+TODO TODO TODO TODOTODOT ODOTODO TODOTODOT ODOTODO
+TODO TODOTODOTO DOTODOTODOTODOT ODOTODO\\
+TODOTOD OTODOTOD OTODOTODOTOD OTODO
+TODOT OD OTODOT ODO
+
+
+\section{Method}
+\label{sec:meth}
+\subsection{Preprocess}
+Given the high temporal complexity of the algorithm, a careful preprocess has to be performed to achieve two conflicting objectives: reduce the number of input points, avoid oversimplification of the input to prevent loss of features of the image. The approach followed to find the balance between the targets is, for the first aim, a resize of the input image, followed by a sampling\footnote{ from experimental results, discarding uniformly a little over 50\% produces good result without apparent loss of information 
+} over the output of the edge detection. For the second goal a careful fine tuning of the Canny algorithm parameters, in particular the double threshold, is to be implemented; unluckily this can’t be standardized over different images, since each input requires different parameters.
+\subsection{ Conceptual space and preference matrix construction}
+Given X as the input data and THETA class of model, we express the preference p(xi,thethai)  with [xi e X] and [thetai e THETA], over a certain hypothesis model h of [thetai], with the same relaxation of the binary preference set introduced in T-linkage [2], called “preference function of a point (PF)” and defined as:
+[insert equation]
+The preference matrix construction process starts with the creation of a number\footnote{during testing, this was usually three times the number of points extracted from the image for each class} of preliminary sample hypotheses H = Hl U Hc. The single hypothesis [hl e Hl] is constructed by randomly sampling couples of points,  identifying the line that crosses them and populating a column of the matrix with p(xi,thethai)  [for each xi e X] . The hypothesis [hc] is built in a similar manner by sampling triplets of points. Naturally the number of samples for each hypothesis has been decided over the minimum sampling size of each class of model. Given the purely geometric nature of the task, the sampling method used is Localized sampling which randomly selects a single point P and, based on a locality bias, select the neighbors. In this way we are able to exploit local information and explore the hypothesis space at the same time.
+\subsection{Initial clusters}
+Clusters are created and populated by a single point each.  Given now every couple of clusters, the inter-cluster distance between two clusters U and V is defined using the single-linkage rule:
+[inserire come multilink (3)]
+where the metric used to measure distance/similarity in the preference space is the Tanimoto distance [2]:
+[inserire come multilink (2)]
+\subsection{Clustering}
+The iterative procedure of clustering is the same for the one proposed in MultiLink [1] but the number of model selection methods has been expanded. These are GRIC,GIC.. which will be described in paragraph 3. The on-the-fly fitting methods used are: for the hypothesis in Hl a simple linear regression to find the best-fit slope and intercept (also handling case with infinite slope), for the hypothesis in Hc Hyper Fit [3] has been used.
+
+\subsection{Outliers rejection}
+The outlier rejection criterion has been chosen following the observation that large clusters of outliers are very unlikely as described in MINPRAN [4]. We decided to avoid finding the right distribution of the probability that the outliers, by coincidence, define a model and consequently assumed that a cardinality-based criterion is sufficient for the scope of the objective, even at the sacrifice of possible small clusters of inliers. In the implementation this has crudely been achieved with a cutoff value for which clusters with less elements are deleted; this, of course, implied a process of fine tuning of the cutoff parameter. The underlying reason for this choice can be found in the non-comparable \footnote{even after the tuning of the Canny parameters} noise level in each picture, and that MultiLink[1], as T-linkage[2], is agnostic about the outlier rejection strategy that comes after.
+
+
+\section{Model selection criteria}
+\label{sec:crit}
+The model selection problem refers to choosing the most appropriate and concise model to express given data in an abstract fashion.
+If there is no a priori information about the shape of surfaces in the scene, a method to choose the correct model is an important ingredient.   
+To determine the correct underlying model of a data set, one may simply suggest the most appropriate model is the one, which best fits the data. This idea, however, does not work because it will always favour the most complex model of a model library. The reason is that the most complex model has more degrees of freedom and can therefore fit to the data better than any other model in that library.
+On the other hand, a MLE (described in [5]) approach will prefer the most general model as the most likely, in fact the model with the lowest SSE (sum of square error), and coincidentally the most general one, wil be chosen, without taking into account the complexity of the model. 
+Thus, to choose the correct model, one needs to establish a trade off between fidelity (how well a model fits the data, which is often measured by SSE) and the complexity of that model. In practice, higher order models have to be penalized so that the selected model would be chosen based on its suitability rather than its fidelity to data. In fact, the salient difference between all the existing model selection criteria is in the way by which they penalize the higher order models.
+This has been achieved by the introduction of several information criteria as a scoring mechanism to rank each model, where we find at the foremost AIC (Akaike's Information Criterion [6]), which two of the following criteria are based on. The two other following are based on the minimum representation of data, where  the minimum description length, an approach suggested by the idea of Algorithmic Complexity (Solomonoff [7] and Kolmogorov [8]) and then introduced by Rissean (1978) [9], has been chosen.
+Here, we briefly explain some popular and effective model selection criteria that we actually used for our project in order to compare them in different scenarios and with different inputs.
+In the following, P refers to the number of parameters of a model, ri, denotes the residual for the ith data point (EQUATION TO COPY).
+We show the scale of noise by delta and the number of data points by N. The dimension of the surface that fits to the data is denoted by d.
+The scale of noise delta has been chosen as (formula delta2 = Sum res2) where N is the number of data points and Ph is the number of parameters of the highest model. The reason that we use the scale of noise for the highest surface (as described by Kanatani in [10]) is that the scale of noise for the correct model and the scale of noise for the higher order models (higher than the correct model) must be close for the fitting to be meaningful.
+\subsection{Generalised Information Criteria (GIC)
+}
+In 1998, P.H.S. Torr proposed GIC, which is a modified version of AIC . In AIC, if the number of data points (N) is much larger than the number of parameters of a model (P) then the influence of P on the AIC’s decision is greatly diminished. In practice, this is a crucial problem since the main task of a model selection criterion is to determine the correct number of parameters of the appropriate model. To avoid this problem, Torr proposed using adjustable coefficients for N and P and rewrote the GAIC to be:
+
+[FORMULA]
+
+Torr suggested (in [12]) that 1>lambda1>2, lambda2>2 will provide satisfactory outcomes. The same author reported that where the difference between the dimensions of the compared models is one, and the required level of significance is alpha = 0.0456 , then, lambda1=2 and lambda2=4 would be reasonable values to use.
+As known in literature, AIC, and by extension GIC, tends to overfit, we will then expect a slightly better performance in more complex models.
+\subsection{ Minimum Description Length (MDL)
+}
+In 1978, Jorma Rissanen introduced MDL [9]. The underlying logic of MDL is that the simplest model that sufficiently describes the data is the best model. For example, if one aims at encoding and transmitting a given data set, the best encoding model is the model that generates the least total size of transmitted data. MDL has the following form:   
+
+[FORMULA]
+
+It is expected to be a robust solution in case of a high number of data N, since its value is considered in a logarithmic fashion in order to reduce the impact on the resulting score. This could end up having a very high result from the first term of the equation and a limited value for the second part of the equation, with their contribution ratio that grows larger and larger as the number of data N increases.
+Instead, since in the second component of the equation some constants are present (P), this could become a problem in case the number of points evaluated N is low, resulting in not attainable scores at the end of the model evaluation procedure.
+
+\subsection{Geometric Minimum Description Length (GMDL)
+}
+Kanatani derived GMDL [13] specifically for geometric fitting.
+As described by Kanatani, the objective of geometric fitting is to estimate the model parameters from observed data. In geometric fitting, the properties of the noise are assumed to be known a priori. In contrast, in the statistical inference procedures, one aims at estimating both the model parameters and the properties (mean and variance) of the noise. In other words, in geometric fitting the main objective is to study the observed data themself whilst in statistical methods one aims at studying the ensemble from which the observed data are sampled. According to Kanatani, in geometric fitting the ensemble is the set of all algorithms that can be applied to solve a specific problem. Therefore, the estimation accuracy only improves if noise is decreased. This is in sharp contrast to the fact that in statistical inference, the estimation accuracy is improved by increasing the number of sample points.
+
+GMDL, similar to MDL (described previously), relies on knowing the scale of noise. This criterion has the following form: 
+
+
+[FORMULA]
+where L is the reference length and can be determined exactly or as Kanatani suggests can be approximated by a practical scale such as the image size.
+
+\subsection{ Geometric Robust Information Criterion (GRIC)
+}
+GRIC originated from the idea of drawing together the geometric AIC (GAIC) developed by Akaike and Kanatani, based on the robust AIC model, to produce an information criterion that is both robust and capable of dealing with models of different dimensionalities.
+As AIC, GRIC is a model selection method that has two main components: a data fidelity term and model complexity term.
+The GRIC cost of a cluster U [CONTAINED EQUAL] X, with respect to a model class THETAk, is defined as: 
+
+[FORMULA]
+
+where err(xi , THETAk(U)) is the data fidelity term that measures the residual between xi BELONG U and the fitted modelTHETAk(U) BELONG THETAk. Here THETA is an estimate of the residuals standard deviation, and RHO is a robust function that bounds the loss at outliers. The other two terms account for model complexity: d is the dimension of the manifold THETAk,MUéMU the number of model parameters, and MOD(U) the cardinality of the cluster U.
+
+
+
+\section{Result comparison}
+\label{sec:rescomp}
+Although we think that there are many factors affecting the suitability of a criterion for employment in a computer vision application, the most important ones are:
+\begin{itemize}
+\item \textbf{Application}:  The nature of physical constraints (which inturn depends on the application) can affect the performance of a model selection criterion. For example, the performance of a model selection criterion for range segmentation differs from its performance for motion segmentation application, as the types of models used in these applications are different.
+
+\item \textbf{Data size}: As we will show, the size of data (size of image, region etc) can significantly change the performance of a model selection criterion.
+
+\item \textbf{Noise}: The scale and distribution of the noise, which are different in synthetic and real data, can affect the performance of a model selection criterion. Most model selection criteria are derived based on a priori assumption about the distribution of the noise.
+
+
+\item \textbf{Model library}:  The model library, from which the most appropriate model is chosen, may include very similar models. In this case, there can be a reduction in the performance of a model selection criterion. For example, the distinction between closely nested models, which have very similar terms, can be challenging to any criterion.
+
+\end{itemize}
+
+\subsection{Performance evaluation}
+aaaaaaaaaaa aq a a a a a a a a a 
+
+\section{References}
+
+\begin{thebibliography}{}
+
+\bibitem{1} Anonymous CVPR 2021 submission. MultiLink: Multi-class Structure Recovery via Agglomerative Clustering and Model Selection
+
+\bibitem{2}Luca Magri and Andrea Fusiello. T-Linkage: A continuous relaxation of J-Linkage for multi-model fitting. In Conference on Computer Vision and Pattern Recognition, pages 3954–3961, June 2014
+
+\bibitem{3}K. Kanatani, Prasanna Rangarajan. Hyper least squares fitting of circles and ellipses. Computational Statistics \& Data Analysis, Volume 55, Issue 6, 2011,Pages 2197-2208
+\bibitem{4}C. V. Stewart. MINPRAN: A new robust estimator for computer vision. Pattern Analysis and Machine Intelligence, 17(10):925–938, 1995.
+
+\bibitem{5} K. Kanatani. Statistical Optimization for Geometric Computation: Theory and Practice. Elsevier Science, Amsterdam, 1996.
+
+\bibitem{6}H. Akaike. A new look at the statistical model identification. IEEE Trans. on Automatic Control, Vol. AC-19(6):716–723, 1974.
+\bibitem{7} R. Solomonoff. A formal theory of inductive inference i. Information and Control, 7:1–22, 1964.
+
+\bibitem{8}A.N. Kolmogorov. Three approaches to the quantitative definition of information. Problems of Information Transmission, 1:4–7, 1965.
+
+\bibitem{9}Rissanen, J., Modeling by Shortest Data Description, Automatica, vol. 14, pp. 465- 471, 1978
+
+\bibitem{10}Kanatani, K., What Is the Geometric AIC? Reply to My Reviewers,1987(unpublished)
+
+\bibitem{11} H. Akaike. A new look at the statistical model identification. IEEE Trans. on Automatic Control, Vol. AC-19(6):716–723, 1974.
+\bibitem{12}Torr, P. H. S., Model Selection for Two View Geometry: A Review, Model Selection for Two View Geometry: A Review, Microsoft Research, USA, Microsoft Research, USA, 1998.
+
+\bibitem{13} Kanatani, K., Model Selection for Geometric Inference, The 5th Asian Conference on Computer Vision, Melbourne, Australia, pp. xxi-xxxii, January 2002.
+
+\bibitem{14}Github repository where to find all code and results\\\texttt{https://github.com/samuelecamnasio/multi-model-fitting}
+
+\end{thebibliography}
+
+\end{document}
