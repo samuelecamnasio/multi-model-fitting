@@ -150,7 +150,7 @@ def model_selection(cluster, mode, points, criteria, lambda1, lambda2, verbose=F
     for i in range(1, len(cluster)):
         p_of_cluster = np.vstack((p_of_cluster, points[cluster[i]]))
     #print(str(p_of_cluster) + " len " + str(len(p_of_cluster)))
-    L = 100*100
+    L = 200
     d = 1  # number of dimensions modeled (d=3 -> fund. matrix, d=2 -> homography, d=1 -> lines, circumferences)
     if mode == "Line":
         u = 2  # number of model paramters (u=2 for lines, u=3 for circumferences)
@@ -258,7 +258,7 @@ def gmdl(p_of_cluster, r, N, P, u_max, sigma, d, L, mode):
         second_cont = 0
     else:
         second_cont = (N * d + P)*delta * (np.log(delta/(L**2)))
-    g = first_cont + second_cont
+    g = first_cont - second_cont
     return g, first_cont, second_cont
 
 def rho_calculation(
