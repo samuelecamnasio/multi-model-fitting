@@ -150,12 +150,13 @@ def model_selection(cluster, mode, points, criteria, lambda1, lambda2, verbose=F
     for i in range(1, len(cluster)):
         p_of_cluster = np.vstack((p_of_cluster, points[cluster[i]]))
     #print(str(p_of_cluster) + " len " + str(len(p_of_cluster)))
-    L = 200*200
+    L = 100*100
     d = 1  # number of dimensions modeled (d=3 -> fund. matrix, d=2 -> homography, d=1 -> lines, circumferences)
     if mode == "Line":
         u = 2  # number of model paramters (u=2 for lines, u=3 for circumferences)
     elif mode == "Circle":
         u = 3
+    u_max = 3
 
     if (len(p_of_cluster) > 1 and mode == "Line") or (len(p_of_cluster) > 2 and mode == "Circle"):
 
@@ -184,11 +185,11 @@ def model_selection(cluster, mode, points, criteria, lambda1, lambda2, verbose=F
             score, first_cont, second_cont = gric(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u, mode)
             #print("Computed score: "+str(score))
         elif criteria == 1:
-            score, first_cont, second_cont = mdl(p_of_cluster, err, sigma, len(cluster), u)
+            score, first_cont, second_cont = mdl(p_of_cluster, err, sigma, len(cluster), u, u_max)
         elif criteria == 2:
-            score, first_cont, second_cont = gic(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u)
+            score, first_cont, second_cont = gic(p_of_cluster, err, sigma, lambda1, lambda2, d, len(cluster), u, u_max)
         elif criteria == 3:
-            score, first_cont, second_cont = gmdl(p_of_cluster, err, len(cluster), u, sigma, d, L, mode)
+            score, first_cont, second_cont = gmdl(p_of_cluster, err, len(cluster), u, u_max, sigma, d, L, mode)
 
     else:
         score = inf
@@ -197,57 +198,68 @@ def model_selection(cluster, mode, points, criteria, lambda1, lambda2, verbose=F
 
     return score, first_cont, second_cont
 
-def gric(p_of_cluster,r, delta, lambda1, lambda2, d, N, u, mode):
+def gric(p_of_cluster,r, sigma, lambda1, lambda2, d, N, u, mode):
     first_cont = 0
-    if delta == 0:
-        first_cont = 0
-        g = (lambda1 * d * N + lambda2 * u)
-        second_cont = g
-    else:
-        rho = rho_calculation(r)
-        for k in range(0, len(p_of_cluster)):
-            # TODO: case sigma=0 (same error for multiple points)
-            # TODO: needs to work also on the parameters, there are problem when recognizing a model in front of another
-            first_cont += (float(rho[k]) * (float(r[k]) / delta) ** 2)
-        second_cont = (lambda1 * d * N + lambda2 * u)
-        g = second_cont + first_cont
+    rho = rho_calculation(r)
+    for k in range(0, len(p_of_cluster)):
+        first_cont += (float(rho[k]) * (float(r[k])) ** 2)
+    if sigma == 0:
+        sigma = 0.01
+    first_cont = first_cont/(sigma**2)
+    second_cont = lambda1 * d * N + lambda2 * u
+    g = first_cont + second_cont
     return g, first_cont, second_cont
 
-def mdl(p_of_cluster, r, delta, N, u):
+def mdl(p_of_cluster, r, sigma, N, u, u_max):
     first_cont = 0
     for k in range(0, len(p_of_cluster)):
-        # TODO: case sigma=0 (same error for multiple points)
-        # TODO: needs to work also on the parameters, there are problem when recognizing a model in front of another
-        first_cont += float(r[k])**2
-    second_cont = (u/2)*np.log(N)*delta**2
-    score = first_cont + second_cont
-    return score, first_cont, second_cont
-
-def gic(p_of_cluster, r, delta, lambda1, lambda2, d, N, u):
-    score = 0
-    first_cont = 0
-    second_cont = 0
-    for k in range(0, len(p_of_cluster)):
-        first_cont += float(r[k]) ** 2
-    second_cont = ((lambda1 * d * N + lambda2 * u) * (delta**2))
-    score = first_cont + second_cont
-    return score, first_cont, second_cont
-
-def gmdl(p_of_cluster, r, N, P, delta, d, L, mode):
-    score = 0
-    first_cont = 0
-    second_cont = 0
-    if delta == 0:
-        score = inf
-        for k in range(0, len(p_of_cluster)):
-            first_cont += float(r[k]) ** 2
+        first_cont += ((float(r[k])) ** 2)
+    if sigma == 0:
+        sigma = 0.01
+    first_cont = first_cont / (sigma ** 2)
+    if N - u_max <= 0:
+        den = N
     else:
-        for k in range(0, len(p_of_cluster)):
-            first_cont += float(r[k])**2
-        second_cont = (N * d + P)*(delta**2) * (np.log(delta/L)**2)
-        score = first_cont - second_cont
-    return score, first_cont, second_cont
+        den = N - u_max
+    delta = first_cont/den
+    second_cont = (u/2)*np.log(N)*delta
+    g = first_cont + second_cont
+    return g, first_cont, second_cont
 
+def gic(p_of_cluster, r, sigma, lambda1, lambda2, d, N, u, u_max):
+    first_cont = 0
+    for k in range(0, len(p_of_cluster)):
+        first_cont += ((float(r[k])) ** 2)
+    if sigma == 0:
+        sigma = 0.01
+    first_cont = first_cont / (sigma ** 2)
+    if N - u_max <= 0:
+        den = N
+    else:
+        den = N - u_max
+    delta = first_cont / den
+    second_cont = (lambda1 * d * N + lambda2 * u) * delta
+    g = first_cont + second_cont
+    return g, first_cont, second_cont
+
+def gmdl(p_of_cluster, r, N, P, u_max, sigma, d, L, mode):
+    first_cont = 0
+    for k in range(0, len(p_of_cluster)):
+        first_cont += ((float(r[k])) ** 2)
+    if sigma == 0:  # case of perfect in the middle (perfect fit is covered)
+        sigma = 0.01
+    first_cont = first_cont / (sigma ** 2)
+    if N - u_max <= 0:
+        den = N
+    else:
+        den = N - u_max
+    delta = first_cont / den
+    if first_cont == 0:
+        second_cont = 0
+    else:
+        second_cont = (N * d + P)*delta * (np.log(delta/(L**2)))
+    g = first_cont + second_cont
+    return g, first_cont, second_cont
 
 def rho_calculation(
         error):  # ATM: binary, equals 1 for inliers (residuals < epsilon) and 0 for outliers. Should be done with M-estimators
