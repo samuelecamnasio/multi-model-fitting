@@ -10,8 +10,11 @@ if __name__ == "__main__":
     wrong_figure = True
     minVal = 300
     maxVal = 500
+    lambda1 = 2
+    lambda2 = 4
+
     while wrong_figure:
-        points = point_from_image(400, "complex", "1", minVal, maxVal)
+        points = point_from_image(200, "shape", "1", minVal, maxVal)
         response = input("Has the edge detection found the right edges with low noise? y/n ")
         if response == "y":
             wrong_figure = False
@@ -27,7 +30,7 @@ if __name__ == "__main__":
     print("computing preference matrix for circles...")
     pref_mat = hstack((pref_mat, get_preference_matrix_2(points, "Circle", K)))
     # Clustering
-    predicted_clusters = clustering(pref_mat, points, 0)  # criteria: 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
+    predicted_clusters, a, b, first, second = clustering(pref_mat, points, 1, lambda1, lambda2)  # criteria: 0 -> GRIC, 1 -> MDL, 2 -> GIC, 3 -> GMDL
 
     # deletes clusters with n° of points below a threshold (2nd parameter)
     wrong_result = True
