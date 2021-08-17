@@ -2,12 +2,15 @@
 
 ## image analysis and computer vision project 2020/2021
 
-Andrea Bonatti
+Andrea Bonatti 
 Samuele Bosi
 Samuele Camnasio
 
 supervised by Luca Magri
 
-Given a set of data contaminated by noise and outliers, multi model fitting aims at recovering multiple geometric structures from data. Typical applications can be encountered in stereo-vision where sparse correspondence can be described by a mixture of homographies (if the scene is composed by multiple planar surfaces) or multiple fundamental matrices (when the scene is dynamic and contains multiple moving objects). The aim of the project is to implement one or more multi-model-fitting techniques and assess their performances in stereo vision problems.
+This is the code for the IACV project. 
+To run it on real images run "Main_real_images.py", the input images can be found on the "resources" folder. While this is running is possible to change the 
+the min and max parameters of Canny, the program will output the temporary result and, in case of unsatisfactory results, the parameters can be changed.
+After the output clusters are given, is also possible to adjust the outliers threshold.
+To run it on the synthetic images and extract the performance metrics, run "Main.py".
 
-Dataset available from: https://cs.adelaide.edu.au/~hwong/doku.php?id=data
