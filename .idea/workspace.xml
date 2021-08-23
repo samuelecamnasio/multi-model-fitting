@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e9d3cd9a-7cfe-4241-9d6e-069897de449c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/multi-model-fitting.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_synthetic_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_real_images.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_real_images.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codice_per_mat.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/1circ1line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/3circ3lines.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/misclassificationErrors.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/morecirc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/morelines.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock_200_5_end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock_400_15_end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock_edge.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock_edge_400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_painting_1_200_20_end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_painting_1_400_30_end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_painting_1_edge_200.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_pinting_1_edge.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex_200.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex_200_25_end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex_200_45_end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex_400_45_end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_1_200_25_700_1200.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_1_200_25_700_1200_end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_25_2000_3500.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_25_2000_5000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_25_2000_5000_end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_PFC_2000_3500.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_PFL_2000_3500.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_edge_2000_3500.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_15.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_17.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_18.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_19.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_20.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_21.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_22.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_23.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_24.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_25.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_26.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_27.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_28.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_29.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_30.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_31.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_33.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_34.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_35.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_36.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_37.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_38.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_39.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_40.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_41.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_42.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_43.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_44.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_45.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_46.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_47.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_48.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results_validation/img_9.png" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Main_synthetic_dataset.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Main_real_images.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Main.py" />
+        <option value="$PROJECT_DIR$/Main_synthetic_dataset.py" />
+        <option value="$PROJECT_DIR$/Main_real_images.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-7" />
+    <option name="width" value="697" />
+    <option name="height" value="745" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="multi-model-fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="multi-model-fitting" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="multi-model-fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="multi-model-fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main_synthetic_dataset" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="multi-model-fitting" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main_synthetic_dataset.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Main_synthetic_dataset" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e9d3cd9a-7cfe-4241-9d6e-069897de449c" name="Default Changelist" comment="" />
+      <created>1629725802631</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1629725802631</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15848215" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32850242" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/resources/img_shape_1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main_real_images.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main_synthetic_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

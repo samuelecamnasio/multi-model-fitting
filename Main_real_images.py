@@ -5,16 +5,23 @@ from clustering import *
 from pointExtractor import *
 
 if __name__ == "__main__":
+
+    # Tunable parameters for model selection criteria
+    lambda1 = 2
+    lambda2 = 4
     K = 3  # multiple of the sampling number
+
     # Extract edge points from a real image
     wrong_figure = True
     minVal = 300
     maxVal = 500
-    lambda1 = 2
-    lambda2 = 4
 
     while wrong_figure:
+        # Point extraction
+        # 2nd parameter -> "shape" for polygonal images, "complex" for real world images
+        # 3rd parameter -> if 2nd paramter "shape"-> 1 for image1 and 2 for image2, if 2nd paramter "complex"-> 1 for image1, 2 for image2 and 3 for image3
         points = point_from_image(200, "shape", "1", minVal, maxVal)
+
         response = input("Has the edge detection found the right edges with low noise? y/n ")
         if response == "y":
             wrong_figure = False
