@@ -153,7 +153,7 @@ def model_selection(cluster, mode, points, criteria, lambda1, lambda2, verbose=F
     L = 200
     d = 1  # number of dimensions modeled (d=3 -> fund. matrix, d=2 -> homography, d=1 -> lines, circumferences)
     if mode == "Line":
-        u = 2  # number of model paramters (u=2 for lines, u=3 for circumferences)
+        u = 2  # number of model parameters (u=2 for lines, u=3 for circumferences)
     elif mode == "Circle":
         u = 3
     u_max = 3

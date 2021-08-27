@@ -62,21 +62,6 @@ def find_circle(x1, y1, x2, y2, x3, y3) :
 def distance_from_circ(h, k, r, p4):  # calculates the normal distance between a point p4 and a circle passing through p1, p2 and p3
     return abs(sqrt(pow(p4[0]-h,2) + pow(p4[1]-k,2)) - r)
 
-# def get_preference_matrix(points):
-#     pref_mat = np.zeros((150, 15))
-#     # this is just for the lines
-#     for i in range(0, len(points) - 1, 10):  # iterates all the models
-#         p1 = points[i]
-#         p2 = points[i + 1]
-#         if (p1 == p2).all():  # checks if two points are equal to avoid the division by 0
-#             p2 = points[i + 2]
-#         i = int(i / 10)
-#         for k in range(0, len(points)):  # iterates all the points
-#             p3 = points[k]
-#             pref_mat[k][i] = distance_from_line(p1, p2, p3)  # populates the preference matrix
-#
-#     # print(pref_mat[:, 14])
-#     return pref_mat
 
 def get_preference_matrix_2(points, mode, K):
     # TODO change the K to select an optimal number of sampling
@@ -188,50 +173,4 @@ def get_localized_prob(pts, pt, ni):
  ideally infinite value)
  
 """
-
-
-#
-#
-##TODO
-#def create_clusters(points):
-#    cluster_list = np.array()
-#    for i in range(len(points)):
-#        ## create new cluster
-#     print()
-#    return cluster_list
-#
-##TODO
-#def create_distance_matrix(points ):
-#    distance_mat = np.zeros([len(points), len(points)])
-#    cluster_array = []
-#    # Dictionary creation
-#    thisdict = {
-#    }
-#
-#    # Population of the dictionary ("index_in_dist_matr": index)
-#    for i in range(len(points)):
-#        cluster_array.append(Cluster(str(i), [points[i]], 0, "line"))
-#        thisdict[str(i)] = i
-#    print(thisdict)
-#
-#    #Calculation of distances and population of the matrix
-#    for c1 in cluster_array:
-#        for c2 in cluster_array:
-#            distance_mat[thisdict[c1.name], thisdict[c2.name]] = jaccard_distance(c1, c2)
-#
-#    print(distance_mat)
-#    return 0
-#
-
-
-# the .mat file is structured with 150 couples of points where from 10 to 10 they belong to the same line
-#mat = scipy.io.loadmat('punti_prova.mat')  # loads the .mat containing the points
-#mat = mat['A']
-
-#prova = Cluster(mat[0:5], 1000, "line")
-
-#print("Cluster prova: " + str(prova.points))
-
-#pm = get_preference_matrix(mat)  # preference matrix calculation
-#create_distance_matrix([[0,0], [1,2], [1,3], [0,0], [4,5]])
 

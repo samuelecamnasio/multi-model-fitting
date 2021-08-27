@@ -105,37 +105,3 @@ def hyper_fit(cluster_points, IterMax=99, verbose=False):
 
 def fit_on_fly_circles(cluster_points):
     return hyper_fit(cluster_points)
-
-"""
-
-def plot_data_circle(x, y, xc, yc, R):
-    
-    Plot data and a fitted circle.
-    Inputs:
-        x : data, x values (array)
-        y : data, y values (array)
-        xc : fit circle center (x-value) (float)
-        yc : fit circle center (y-value) (float)
-        R : fir circle radius (float)
-    Output:
-        None (generates matplotlib plot).
-    
-    f = plt.figure(facecolor='white')
-    plt.axis('equal')
-
-    theta_fit = np.linspace(-pi, pi, 180)
-
-    x_fit = xc + R * np.cos(theta_fit)
-    y_fit = yc + R * np.sin(theta_fit)
-    plt.plot(x_fit, y_fit, 'b-', label="fitted circle", lw=2)
-    plt.plot([xc], [yc], 'bD', mec='y', mew=1)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    # plot data
-    plt.scatter(x, y, c='red', label='data')
-
-    plt.legend(loc='best', labelspacing=0.1)
-    plt.grid()
-    plt.title('Fit Circle')
-    
-    """

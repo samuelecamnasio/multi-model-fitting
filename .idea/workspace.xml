@@ -2,89 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9d3cd9a-7cfe-4241-9d6e-069897de449c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/multi-model-fitting.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_synthetic_dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main_real_images.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_real_images.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codice_per_mat.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/1circ1line.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/3circ3lines.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/misclassificationErrors.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/morecirc.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/morelines.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock_200_5_end.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock_400_15_end.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock_edge.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_clock_edge_400.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_painting_1_200_20_end.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_painting_1_400_30_end.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_painting_1_edge_200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_pinting_1_edge.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex_200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex_200_25_end.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex_200_45_end.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/myplot_rolex_400_45_end.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_1_200_25_700_1200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_1_200_25_700_1200_end.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_25_2000_3500.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_25_2000_5000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_25_2000_5000_end.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_PFC_2000_3500.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_PFL_2000_3500.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_second_roud/painting_2_400_edge_2000_3500.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_12.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_13.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_14.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_15.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_17.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_18.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_19.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_20.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_21.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_22.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_23.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_24.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_25.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_26.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_27.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_28.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_29.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_30.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_31.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_33.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_34.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_35.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_36.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_37.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_38.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_39.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_40.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_41.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_42.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_43.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_44.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_45.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_46.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_47.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results_validation/img_9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CircleFitter.py" beforeDir="false" afterPath="$PROJECT_DIR$/CircleFitter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clustering.py" beforeDir="false" afterPath="$PROJECT_DIR$/clustering.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pointExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/pointExtractor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pref_matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/pref_matrix.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,12 +16,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main_synthetic_dataset.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+            <state relative-caret-position="1513">
+              <caret line="89" column="21" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -107,10 +30,78 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/getPoints.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-243">
+              <caret line="410" column="4" selection-start-line="410" selection-start-column="4" selection-end-line="410" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/LineFitter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-56">
+              <folding>
+                <element signature="e#0#34#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pointExtractor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pref_matrix.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1450">
+              <caret line="63" selection-start-line="63" selection-end-line="63" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="51">
+                <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/clustering.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-141">
+              <caret line="259" column="61" selection-start-line="259" selection-start-column="61" selection-end-line="259" selection-end-column="61" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main_real_images.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="-223">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -129,20 +120,25 @@
         <option value="$PROJECT_DIR$/Main.py" />
         <option value="$PROJECT_DIR$/Main_synthetic_dataset.py" />
         <option value="$PROJECT_DIR$/Main_real_images.py" />
+        <option value="$PROJECT_DIR$/clustering.py" />
+        <option value="$PROJECT_DIR$/CircleFitter.py" />
+        <option value="$PROJECT_DIR$/pref_matrix.py" />
+        <option value="$PROJECT_DIR$/pointExtractor.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="width" value="697" />
-    <option name="height" value="745" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="699" />
+    <option name="height" value="754" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -159,6 +155,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -218,15 +215,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="-8" y="-8" width="699" height="754" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15848215" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25113463" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32850242" />
@@ -234,6 +228,10 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -243,10 +241,37 @@
     <entry file="file://$PROJECT_DIR$/resources/img_shape_1.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/CircleFitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1819">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-141">
+          <caret line="259" column="61" selection-start-line="259" selection-start-column="61" selection-end-line="259" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/getPoints.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-243">
+          <caret line="410" column="4" selection-start-line="410" selection-start-column="4" selection-end-line="410" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Main_real_images.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="-223">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -255,10 +280,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Main_synthetic_dataset.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+        <state relative-caret-position="1513">
+          <caret line="89" column="21" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="51">
+            <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pref_matrix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1450">
+          <caret line="63" selection-start-line="63" selection-end-line="63" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pointExtractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LineFitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-56">
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
